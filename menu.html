@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Menu del Giorno - Tre Stelle</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  font-family:'Open Sans', sans-serif;
+  background:#1a1a1a;
+  color:white;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+header, .prezzi, .data, .grid{
+  width:40%;
+  min-width:300px;
+}
+
+header{
+  background:#7A1F26;
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+header a{
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+  opacity:0.8;
+}
+
+header h1{
+  font-family:'Playfair Display', serif;
+  font-size:20px;
+  letter-spacing:3px;
+}
+
+.prezzi{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  justify-content:center;
+}
+
+.prezzo-box{
+  flex:1;
+  max-width:200px;
+  background:#F4A820;
+  color:#1a1a1a;
+  border-radius:10px;
+  text-align:center;
+  padding:10px 8px;
+}
+
+.prezzo-box .cifra{
+  font-size:28px;
+  font-weight:700;
+  line-height:1;
+}
+
+.prezzo-box .label{
+  font-size:11px;
+  font-weight:700;
+  margin-top:3px;
+  text-transform:uppercase;
+}
+
+.data{
+  text-align:center;
+  font-size:13px;
+  color:#aaa;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  padding-bottom:10px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  padding:8px 10px;
+  flex:1;
+}
+
+.colonna{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.sezione{
+  background:#2a2a2a;
+  border-radius:10px;
+  padding:10px;
+}
+
+.sezione-titolo{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#F4A820;
+  margin-bottom:8px;
+}
+
+.piatto{
+  font-size:14px;
+  font-weight:700;
+  padding:5px 0;
+  border-bottom:1px solid #3a3a3a;
+  line-height:1.2;
+}
+
+.piatto:last-child{
+  border-bottom:none;
+  padding-bottom:0;
+}
+
+.contorni-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+}
+
+.contorno{
+  font-size:15px;
+  font-weight:700;
+  background:#333;
+  border-radius:8px;
+  padding:8px 10px;
+  text-align:center;
+}
+
+.contorni-grid .contorno:last-child:nth-child(odd){
+  grid-column:1/-1;
+}
+
+/* Tooltip */
+.piatto, .contorno{
+  position:relative;
+  cursor:pointer;
+}
+
+.piatto .tip, .contorno .tip{
+  display:none;
+  position:absolute;
+  bottom:calc(100% + 8px);
+  left:50%;
+  transform:translateX(-50%);
+  background:#1a1a1a;
+  border:2px solid #F4A820;
+  color:white;
+  font-size:11px;
+  font-weight:400;
+  border-radius:10px;
+  white-space:nowrap;
+  z-index:10;
+  pointer-events:none;
+  overflow:hidden;
+  width:160px;
+  white-space:normal;
+  text-align:center;
+}
+
+.piatto .tip img, .contorno .tip img{
+  width:100%;
+  height:90px;
+  object-fit:cover;
+  display:block;
+}
+
+.piatto .tip span, .contorno .tip span{
+  display:block;
+  padding:5px 8px;
+  font-size:11px;
+  color:#ccc;
+}
+
+.piatto .tip::after, .contorno .tip::after{
+  content:'';
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  border:5px solid transparent;
+  border-top-color:#F4A820;
+}
+
+.piatto:hover .tip, .contorno:hover .tip,
+.piatto:focus .tip, .contorno:focus .tip{
+  display:block;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html">← Home</a>
+  <h1>TRE STELLE</h1>
+  <div style="width:60px"></div>
+</header>
+
+<div class="prezzi">
+  <div class="prezzo-box">
+    <div class="cifra">€ 18</div>
+    <div class="label">Menu completo</div>
+  </div>
+  <div class="prezzo-box" style="background:#e8e8e8">
+    <div class="cifra">€ 13<span style="font-size:22px">.50</span></div>
+    <div class="label">Mezzo menu</div>
+  </div>
+</div>
+
+<div class="data">Lunedì 8 Giugno 2026</div>
+
+<div class="grid">
+
+  <div class="colonna">
+    <div class="sezione">
+      <div class="sezione-titolo">Primi</div>
+      <div class="piatto">Tagliatelle al ragù<div class="tip"><img src="https://images.unsplash.com/photo-1551183053-bf91798d047e?w=320&q=80" alt=""><span>manzo, carota, sedano, cipolla, pomodoro</span></div></div>
+      <div class="piatto">Pasta e fagioli<div class="tip"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=320&q=80" alt=""><span>cannellini, rosmarino, lardo, pasta mista</span></div></div>
+      <div class="piatto">Lasagna della casa<div class="tip"><img src="https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=320&q=80" alt=""><span>besciamella, ragù misto, parmigiano, sfoglia fresca</span></div></div>
+    </div>
+  </div>
+
+  <div class="colonna">
+    <div class="sezione">
+      <div class="sezione-titolo">Secondi</div>
+      <div class="piatto">Pollo arrosto<div class="tip"><img src="https://images.unsplash.com/photo-1598103442097-8b74394b95c8?w=320&q=80" alt=""><span>pollo ruspante, aglio, rosmarino, vino bianco</span></div></div>
+      <div class="piatto">Cotoletta di maiale<div class="tip"><img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=320&q=80" alt=""><span>lonza, pangrattato, uovo, limone</span></div></div>
+      <div class="piatto">Salsiccia alla griglia<div class="tip"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=320&q=80" alt=""><span>maiale, finocchietto, pepe nero, vino rosso</span></div></div>
+    </div>
+  </div>
+
+  <div class="colonna" style="grid-column:1/-1">
+    <div class="sezione">
+      <div class="sezione-titolo">Contorni</div>
+      <div class="contorni-grid">
+        <div class="contorno">Patate al forno<div class="tip"><img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=320&q=80" alt=""><span>patate, rosmarino, aglio, olio</span></div></div>
+        <div class="contorno">Insalata mista<div class="tip"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=320&q=80" alt=""><span>lattuga, radicchio, carota, pomodorini</span></div></div>
+        <div class="contorno">Verdure grigliate<div class="tip"><img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=320&q=80" alt=""><span>zucchine, peperoni, melanzane</span></div></div>
+        <div class="contorno">Fagioli in umido<div class="tip"><img src="https://images.unsplash.com/photo-1548869206-93b036a9f5f7?w=320&q=80" alt=""><span>borlotti, salvia, aglio, pomodoro</span></div></div>
+        <div class="contorno">Spinaci saltati<div class="tip"><img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=320&q=80" alt=""><span>spinaci, aglio, olio, peperoncino</span></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

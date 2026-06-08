@@ -48,11 +48,41 @@ h1{
 .btn{
   display:inline-block;
   margin-top:20px;
+  margin-left:10px;
   padding:12px 25px;
   background:#7A1F26;
   color:white;
   text-decoration:none;
   border-radius:30px;
+}
+
+.btn-outline{
+  background:transparent;
+  border:2px solid white;
+}
+
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  display:flex;
+  justify-content:center;
+  padding:12px;
+  background:rgba(0,0,0,0.35);
+}
+
+.btn-menu{
+  background:#F4A820;
+  color:#1a1a1a;
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:1px;
+  border-radius:30px;
+  padding:12px 32px;
+  text-decoration:none;
+  display:inline-block;
 }
 
 section{
@@ -116,6 +146,10 @@ footer{
 </head>
 
 <body>
+
+<div class="topbar">
+  <a class="btn-menu" href="menu.html">Menu del Giorno</a>
+</div>
 
 <div class="hero">
   <div class="hero-content">
