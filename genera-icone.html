@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Genera Icone PWA</title></head>
+<body style="font-family:sans-serif;padding:20px;background:#f0f0f0">
+<h2>Generatore Icone - Tre Stelle PWA</h2>
+<p>Clicca i pulsanti per scaricare le icone e salvale nella stessa cartella del sito.</p>
+<canvas id="c" style="display:none"></canvas>
+<br>
+<button onclick="scarica(192)">Scarica icon-192.png</button>
+<button onclick="scarica(512)" style="margin-left:10px">Scarica icon-512.png</button>
+<div id="preview" style="margin-top:20px"></div>
+
+<script>
+function disegna(size) {
+  const c = document.getElementById('c');
+  c.width = size; c.height = size;
+  const ctx = c.getContext('2d');
+
+  // sfondo bordeaux
+  ctx.fillStyle = '#7A1F26';
+  ctx.beginPath();
+  ctx.roundRect(0, 0, size, size, size * 0.18);
+  ctx.fill();
+
+  // stelle
+  const starSize = size * 0.13;
+  const y = size * 0.38;
+  const spacing = size * 0.28;
+  ctx.fillStyle = '#F4A820';
+  [size/2 - spacing, size/2, size/2 + spacing].forEach(x => stella(ctx, x, y, starSize));
+
+  // testo TRE STELLE
+  ctx.fillStyle = 'white';
+  ctx.font = `bold ${size * 0.12}px serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('TRE STELLE', size/2, size * 0.65);
+
+  ctx.font = `${size * 0.07}px sans-serif`;
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.fillText('dal 1927', size/2, size * 0.78);
+
+  return c;
+}
+
+function stella(ctx, cx, cy, r) {
+  const n = 5, inner = r * 0.4;
+  ctx.beginPath();
+  for (let i = 0; i < n * 2; i++) {
+    const a = (i * Math.PI / n) - Math.PI / 2;
+    const rad = i % 2 === 0 ? r : inner;
+    i === 0 ? ctx.moveTo(cx + Math.cos(a)*rad, cy + Math.sin(a)*rad)
+             : ctx.lineTo(cx + Math.cos(a)*rad, cy + Math.sin(a)*rad);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+function scarica(size) {
+  const c = disegna(size);
+  const a = document.createElement('a');
+  a.download = `icon-${size}.png`;
+  a.href = c.toDataURL('image/png');
+  a.click();
+  // anteprima
+  const img = document.createElement('img');
+  img.src = c.toDataURL('image/png');
+  img.style.cssText = `width:${Math.min(size,96)}px;height:${Math.min(size,96)}px;margin:10px;border-radius:12px`;
+  document.getElementById('preview').appendChild(img);
+}
+</script>
+</body>
+</html>
