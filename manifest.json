@@ -2,7 +2,7 @@
   "name": "Menu del Giorno - Tre Stelle",
   "short_name": "Tre Stelle",
   "description": "Menu del giorno del Ristorante Tre Stelle di Castelraimondo",
-  "start_url": "/menu.html",
+  "start_url": "/tre-stelle/menu.html",
   "display": "standalone",
   "background_color": "#1a1a1a",
   "theme_color": "#7A1F26",
