@@ -213,6 +213,15 @@ header h1{
 .piatto:focus .tip, .contorno:focus .tip{
   display:block;
 }
+
+/* Loading / errore */
+.stato{
+  grid-column:1/-1;
+  text-align:center;
+  padding:40px 20px;
+  color:#aaa;
+  font-size:14px;
+}
 </style>
 </head>
 
@@ -224,59 +233,94 @@ header h1{
   <div style="width:60px"></div>
 </header>
 
-<div class="prezzi">
-  <div class="prezzo-box">
-    <div class="cifra">€ 18</div>
-    <div class="label">Menu completo</div>
-  </div>
-  <div class="prezzo-box" style="background:#e8e8e8">
-    <div class="cifra">€ 13<span style="font-size:22px">.50</span></div>
-    <div class="label">Mezzo menu</div>
-  </div>
-</div>
-
-<div class="data">Lunedì 8 Giugno 2026</div>
-
-<div class="grid">
-
-  <div class="colonna">
-    <div class="sezione">
-      <div class="sezione-titolo">Primi</div>
-      <div class="piatto">Tagliatelle al ragù<div class="tip"><img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=320&q=80" alt=""><span>manzo, carota, sedano, cipolla, pomodoro</span></div></div>
-      <div class="piatto">Pasta e fagioli<div class="tip"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=320&q=80" alt=""><span>cannellini, rosmarino, lardo, pasta mista</span></div></div>
-      <div class="piatto">Lasagna della casa<div class="tip"><img src="https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=320&q=80" alt=""><span>besciamella, ragù misto, parmigiano, sfoglia fresca</span></div></div>
-    </div>
-  </div>
-
-  <div class="colonna">
-    <div class="sezione">
-      <div class="sezione-titolo">Secondi</div>
-      <div class="piatto">Pollo arrosto<div class="tip"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=320&q=80" alt=""><span>pollo ruspante, aglio, rosmarino, vino bianco</span></div></div>
-      <div class="piatto">Cotoletta di maiale<div class="tip"><img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=320&q=80" alt=""><span>lonza, pangrattato, uovo, limone</span></div></div>
-      <div class="piatto">Salsiccia alla griglia<div class="tip"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=320&q=80" alt=""><span>maiale, finocchietto, pepe nero, vino rosso</span></div></div>
-    </div>
-  </div>
-
-  <div class="colonna" style="grid-column:1/-1; margin-top:-6px">
-    <div class="sezione">
-      <div class="sezione-titolo">Contorni</div>
-      <div class="contorni-grid">
-        <div class="contorno">Patate al forno<div class="tip"><img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=320&q=80" alt=""><span>patate, rosmarino, aglio, olio</span></div></div>
-        <div class="contorno">Insalata mista<div class="tip"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=320&q=80" alt=""><span>lattuga, radicchio, carota, pomodorini</span></div></div>
-        <div class="contorno">Verdure grigliate<div class="tip"><img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=320&q=80" alt=""><span>zucchine, peperoni, melanzane</span></div></div>
-        <div class="contorno">Fagioli in umido<div class="tip"><img src="https://images.unsplash.com/photo-1548869206-93b036a9f5f7?w=320&q=80" alt=""><span>borlotti, salvia, aglio, pomodoro</span></div></div>
-        <div class="contorno">Spinaci saltati<div class="tip"><img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=320&q=80" alt=""><span>spinaci, aglio, olio, peperoncino</span></div></div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
+<div class="prezzi" id="prezzi"></div>
+<div class="data" id="data">Caricamento...</div>
+<div class="grid" id="grid"><div class="stato">Caricamento menu...</div></div>
 
 <script>
+// ↓ Sostituisci con il tuo URL dopo aver pubblicato lo script
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylV2bKPv3M8t8YrXQOZLTJJ_Sz3bRZPEK7d1V3P7gctycXpAgFAZT-JySdCYctLmUe0g/exec';
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
+
+function makeTip(item) {
+  if (!item.ingredienti && !item.foto) return '';
+  const img = item.foto ? `<img src="${item.foto}" alt="" loading="lazy">` : '';
+  const txt = item.ingredienti ? `<span>${item.ingredienti}</span>` : '';
+  return `<div class="tip">${img}${txt}</div>`;
+}
+
+function renderMenu(dati) {
+  // Prezzi
+  document.getElementById('prezzi').innerHTML = `
+    <div class="prezzo-box">
+      <div class="cifra">€ ${dati.prezzoCompleto}</div>
+      <div class="label">Menu completo</div>
+    </div>
+    <div class="prezzo-box" style="background:#e8e8e8">
+      <div class="cifra">€ ${dati.prezzoMezzo}</div>
+      <div class="label">Mezzo menu</div>
+    </div>`;
+
+  // Data
+  document.getElementById('data').textContent = dati.data;
+
+  // Grid
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  const { Primi, Secondi, Contorni } = dati.sezioni;
+
+  // Colonna Primi
+  if (Primi) {
+    const col = document.createElement('div');
+    col.className = 'colonna';
+    col.innerHTML = `
+      <div class="sezione">
+        <div class="sezione-titolo">Primi</div>
+        ${Primi.map(p => `<div class="piatto" tabindex="0">${p.nome}${makeTip(p)}</div>`).join('')}
+      </div>`;
+    grid.appendChild(col);
+  }
+
+  // Colonna Secondi
+  if (Secondi) {
+    const col = document.createElement('div');
+    col.className = 'colonna';
+    col.innerHTML = `
+      <div class="sezione">
+        <div class="sezione-titolo">Secondi</div>
+        ${Secondi.map(p => `<div class="piatto" tabindex="0">${p.nome}${makeTip(p)}</div>`).join('')}
+      </div>`;
+    grid.appendChild(col);
+  }
+
+  // Contorni (larghezza piena)
+  if (Contorni) {
+    const col = document.createElement('div');
+    col.className = 'colonna';
+    col.style.gridColumn = '1/-1';
+    col.style.marginTop = '-6px';
+    col.innerHTML = `
+      <div class="sezione">
+        <div class="sezione-titolo">Contorni</div>
+        <div class="contorni-grid">
+          ${Contorni.map(c => `<div class="contorno" tabindex="0">${c.nome}${makeTip(c)}</div>`).join('')}
+        </div>
+      </div>`;
+    grid.appendChild(col);
+  }
+}
+
+fetch(SCRIPT_URL)
+  .then(r => r.json())
+  .then(renderMenu)
+  .catch(() => {
+    document.getElementById('grid').innerHTML =
+      '<div class="stato">Menu non disponibile. Riprova più tardi.</div>';
+  });
 </script>
 </body>
 </html>
