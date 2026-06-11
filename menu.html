@@ -261,7 +261,13 @@ function renderMenu(dati) {
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
 
-  const { Primi, Secondi, Contorni } = dati.sezioni;
+  const find = name => {
+    const key = Object.keys(dati.sezioni).find(k => k.toLowerCase() === name.toLowerCase());
+    return key ? dati.sezioni[key] : null;
+  };
+  const Primi = find('primi');
+  const Secondi = find('secondi');
+  const Contorni = find('contorni');
 
   // Colonna Primi
   if (Primi) {
