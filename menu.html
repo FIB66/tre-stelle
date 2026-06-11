@@ -185,13 +185,6 @@ header h1{
   text-align:center;
 }
 
-.piatto .tip img, .contorno .tip img{
-  width:100%;
-  height:90px;
-  object-fit:cover;
-  display:block;
-}
-
 .piatto .tip span, .contorno .tip span{
   display:block;
   padding:5px 8px;
@@ -209,8 +202,7 @@ header h1{
   border-top-color:#F4A820;
 }
 
-.piatto:hover .tip, .contorno:hover .tip,
-.piatto:focus .tip, .contorno:focus .tip{
+.piatto.active .tip, .contorno.active .tip{
   display:block;
 }
 
@@ -246,10 +238,8 @@ if ('serviceWorker' in navigator) {
 }
 
 function makeTip(item) {
-  if (!item.ingredienti && !item.foto) return '';
-  const img = item.foto ? `<img src="${item.foto}" alt="" loading="lazy">` : '';
-  const txt = item.ingredienti ? `<span>${item.ingredienti}</span>` : '';
-  return `<div class="tip">${img}${txt}</div>`;
+  if (!item.ingredienti) return '';
+  return `<div class="tip"><span>${item.ingredienti}</span></div>`;
 }
 
 function renderMenu(dati) {
@@ -321,6 +311,24 @@ fetch(SCRIPT_URL)
     document.getElementById('grid').innerHTML =
       '<div class="stato">Menu non disponibile. Riprova più tardi.</div>';
   });
+
+// Tap per mostrare/nascondere ingredienti su mobile
+document.addEventListener('click', e => {
+  const el = e.target.closest('.piatto, .contorno');
+  if (el) {
+    const wasActive = el.classList.contains('active');
+    // Chiude tutti
+    document.querySelectorAll('.piatto.active, .contorno.active')
+      .forEach(x => x.classList.remove('active'));
+    // Apre quello toccato (toggle)
+    if (!wasActive) el.classList.add('active');
+    e.stopPropagation();
+  } else {
+    // Tap fuori: chiude tutto
+    document.querySelectorAll('.piatto.active, .contorno.active')
+      .forEach(x => x.classList.remove('active'));
+  }
+});
 </script>
 </body>
 </html>
