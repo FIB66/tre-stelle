@@ -15,8 +15,9 @@ function doGet() {
   const sezioni = {};
   rows.forEach(([sezione, nome, ingredienti, foto]) => {
     if (!nome) return; // riga vuota
-    if (!sezioni[sezione]) sezioni[sezione] = [];
-    sezioni[sezione].push({ nome, ingredienti, foto });
+    const key = String(sezione).trim().toLowerCase();
+    if (!sezioni[key]) sezioni[key] = [];
+    sezioni[key].push({ nome: String(nome).trim(), ingredienti, foto });
   });
 
   const output = {
