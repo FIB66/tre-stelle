@@ -222,7 +222,7 @@ header h1{
 <header>
   <a href="index.html">← Home</a>
   <h1>TRE STELLE</h1>
-  <a href="https://docs.google.com/spreadsheets/d/1AWUqkjdrz9x8Dm0-9UIwPdF5A-4y0dksZ2gxDn9sKKA/edit" target="_blank" style="font-size:18px; visibility:hidden" id="editLink" title="Modifica menu">✏️</a>
+  <span style="width:40px"></span>
 </header>
 
 <div class="prezzi" id="prezzi"></div>
@@ -237,31 +237,12 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
 
-// La matita di modifica è nascosta al pubblico: si attiva solo sui
-// dispositivi dei gestori aprendo una volta menu.html?gestione
-if (new URLSearchParams(location.search).has('gestione')) {
-  localStorage.setItem('treStelleGestore', '1');
+// Qualsiasi testo proveniente dal foglio Google viene trattato come puro
+// testo, mai come codice (protezione nel caso il foglio venisse compromesso)
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c =>
+    ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 }
-if (localStorage.getItem('treStelleGestore') === '1') {
-  document.getElementById('editLink').style.visibility = 'visible';
-}
-
-// Attivazione alternativa: 5 tocchi rapidi sul titolo TRE STELLE
-// (serve nell'app installata su iPhone, dove non si può digitare l'indirizzo;
-//  altri 5 tocchi la nascondono di nuovo)
-let titTaps = 0, titTimer;
-document.querySelector('header h1').addEventListener('click', () => {
-  titTaps++;
-  clearTimeout(titTimer);
-  titTimer = setTimeout(() => { titTaps = 0; }, 1500);
-  if (titTaps >= 5) {
-    titTaps = 0;
-    const attiva = localStorage.getItem('treStelleGestore') !== '1';
-    if (attiva) localStorage.setItem('treStelleGestore', '1');
-    else localStorage.removeItem('treStelleGestore');
-    document.getElementById('editLink').style.visibility = attiva ? 'visible' : 'hidden';
-  }
-});
 
 // La data può arrivare come stringa ISO dal foglio: la mostriamo in italiano
 function formatData(v) {
@@ -290,18 +271,18 @@ function formatPrezzo(v) {
 
 function makeTip(item) {
   if (!item.ingredienti) return '';
-  return `<div class="tip"><span>${item.ingredienti}</span></div>`;
+  return `<div class="tip"><span>${esc(item.ingredienti)}</span></div>`;
 }
 
 function renderMenu(dati) {
   // Prezzi
   document.getElementById('prezzi').innerHTML = `
     <div class="prezzo-box">
-      <div class="cifra">€ ${formatPrezzo(dati.prezzoCompleto)}</div>
+      <div class="cifra">€ ${esc(formatPrezzo(dati.prezzoCompleto))}</div>
       <div class="label">Menu completo</div>
     </div>
     <div class="prezzo-box" style="background:#e8e8e8">
-      <div class="cifra">€ ${formatPrezzo(dati.prezzoMezzo)}</div>
+      <div class="cifra">€ ${esc(formatPrezzo(dati.prezzoMezzo))}</div>
       <div class="label">Mezzo menu</div>
     </div>`;
 
@@ -327,7 +308,7 @@ function renderMenu(dati) {
     col.innerHTML = `
       <div class="sezione">
         <div class="sezione-titolo">Primi</div>
-        ${Primi.map(p => `<div class="piatto" tabindex="0">${p.nome}${makeTip(p)}</div>`).join('')}
+        ${Primi.map(p => `<div class="piatto" tabindex="0">${esc(p.nome)}${makeTip(p)}</div>`).join('')}
       </div>`;
     grid.appendChild(col);
   }
@@ -339,7 +320,7 @@ function renderMenu(dati) {
     col.innerHTML = `
       <div class="sezione">
         <div class="sezione-titolo">Secondi</div>
-        ${Secondi.map(p => `<div class="piatto" tabindex="0">${p.nome}${makeTip(p)}</div>`).join('')}
+        ${Secondi.map(p => `<div class="piatto" tabindex="0">${esc(p.nome)}${makeTip(p)}</div>`).join('')}
       </div>`;
     grid.appendChild(col);
   }
@@ -354,7 +335,7 @@ function renderMenu(dati) {
       <div class="sezione">
         <div class="sezione-titolo">Contorni</div>
         <div class="contorni-grid">
-          ${Contorni.map(c => `<div class="contorno" tabindex="0">${c.nome}${makeTip(c)}</div>`).join('')}
+          ${Contorni.map(c => `<div class="contorno" tabindex="0">${esc(c.nome)}${makeTip(c)}</div>`).join('')}
         </div>
       </div>`;
     grid.appendChild(col);
