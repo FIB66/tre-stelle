@@ -38,7 +38,7 @@
 ### Instagram (@ristorante_tre_stelle) — 2-3 post a settimana
 Formula che funziona per i ristoranti:
 - **Lunedì**: foto del piatto della settimana (alternare lumache e trippa!)
-- **Giovedì**: storia/dietro le quinte (Maria che tira la pasta, la cucina, il locale)
+- **Giovedì**: storia/dietro le quinte (la pasta tirata a mano, la cucina, il locale)
 - **Sabato**: promemoria "questo weekend siamo aperti a pranzo e cena" + menu del giorno
 - Hashtag fissi: #lumache #trippa #cucinamarchigiana #castelraimondo #marche #ristorantimarche #dal1927
 - Nelle storie: screenshot del menu del giorno (menu.html) ogni mattina
