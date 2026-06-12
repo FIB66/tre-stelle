@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fib66.github.io/tre-stelle/sitemap.xml

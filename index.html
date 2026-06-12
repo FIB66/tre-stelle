@@ -3,7 +3,62 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Tre Stelle - Dal 1927</title>
+<title>Ristorante Tre Stelle – Lumache e Trippa | Cucina Marchigiana a Castelraimondo (MC)</title>
+<meta name="description" content="Dal 1927 il Ristorante Tre Stelle di Castelraimondo è il punto di riferimento nelle Marche per le lumache e la trippa. Cucina marchigiana autentica, menu del giorno, pasta fatta a mano. Via Roma 33, Castelraimondo (MC).">
+<link rel="canonical" href="https://fib66.github.io/tre-stelle/">
+
+<!-- Open Graph (condivisione WhatsApp / Facebook / Instagram) -->
+<meta property="og:type" content="restaurant">
+<meta property="og:title" content="Ristorante Tre Stelle – Lumache e Trippa dal 1927">
+<meta property="og:description" content="Il riferimento marchigiano per lumache e trippa. Cucina tradizionale a Castelraimondo (MC). Menu del giorno sempre aggiornato.">
+<meta property="og:url" content="https://fib66.github.io/tre-stelle/">
+<meta property="og:image" content="https://fib66.github.io/tre-stelle/icon-512.png">
+<meta property="og:locale" content="it_IT">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7A1F26">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<!-- Dati strutturati per Google (scheda ristorante nei risultati di ricerca) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Ristorante Tre Stelle",
+  "url": "https://fib66.github.io/tre-stelle/",
+  "image": "https://fib66.github.io/tre-stelle/icon-512.png",
+  "telephone": "+390737641844",
+  "servesCuisine": ["Cucina marchigiana", "Lumache", "Trippa", "Cucina tradizionale italiana"],
+  "priceRange": "€€",
+  "foundingDate": "1927",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via Roma 33",
+    "addressLocality": "Castelraimondo",
+    "addressRegion": "MC",
+    "postalCode": "62022",
+    "addressCountry": "IT"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "12:00",
+      "closes": "15:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "17:00",
+      "closes": "22:00"
+    }
+  ],
+  "sameAs": ["https://www.instagram.com/ristorante_tre_stelle"],
+  "hasMenu": "https://fib66.github.io/tre-stelle/menu.html",
+  "acceptsReservations": "True"
+}
+</script>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -118,6 +173,46 @@ h2{
   border-radius:10px;
 }
 
+.card h3{
+  font-family:'Playfair Display', serif;
+  margin:8px 0 6px;
+  font-size:19px;
+}
+
+.card p{
+  margin:0;
+  font-size:14px;
+  line-height:1.5;
+  color:#555;
+}
+
+.card-icon{
+  font-size:34px;
+}
+
+.card-top{
+  border-top:4px solid #7A1F26;
+}
+
+.tagline{
+  font-size:20px;
+  font-style:italic;
+  margin-top:6px;
+}
+
+.tagline strong{
+  color:#F4A820;
+}
+
+@media (max-width:700px){
+  h1{ font-size:42px; }
+  .story{ flex-direction:column; }
+  .story img{ width:100%; }
+  .cards{ flex-direction:column; }
+  .gallery{ grid-template-columns:1fr; }
+  section{ padding:50px 6%; }
+}
+
 .gallery{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -155,24 +250,25 @@ footer{
   <div class="hero-content">
     <h1>TRE STELLE</h1>
     <p>Dal 1927 • Castelraimondo</p>
-    <a class="btn" href="#">Prenota un Tavolo</a>
+    <p class="tagline">Il riferimento marchigiano per <strong>lumache</strong> e <strong>trippa</strong></p>
+    <a class="btn" href="#prenota">Prenota un Tavolo</a>
   </div>
 </div>
 
 <section>
 <h2>La nostra storia</h2>
 <div class="story">
-<img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba"/>
-<p>Dal 1927 il Ristorante Tre Stelle porta avanti la tradizione marchigiana con passione e dedizione. Riccardo Antonini e la cuoca Maria Antonini vi accolgono ogni giorno con i sapori autentici delle Marche.</p>
+<img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba" alt="Ristorante Tre Stelle, Castelraimondo"/>
+<p>Dal 1927 il Ristorante Tre Stelle porta avanti la tradizione marchigiana con passione e dedizione. Riccardo Antonini e la cuoca Maria Antonini vi accolgono ogni giorno con i sapori autentici delle Marche: qui le <strong>lumache</strong> e la <strong>trippa</strong> si preparano come una volta, ed è per questi due piatti che da generazioni si viene a Castelraimondo da tutta la regione.</p>
 </div>
 </section>
 
 <section>
-<h2>Specialità</h2>
+<h2>Le nostre specialità</h2>
 <div class="cards">
-<div class="card">🍝 Pasta fatta a mano</div>
-<div class="card">🍄 Tartufo e funghi</div>
-<div class="card">🥩 Carni selezionate</div>
+<div class="card card-top"><div class="card-icon">🐌</div><h3>Lumache alla marchigiana</h3><p>Il piatto che ci rende unici nelle Marche: lumache cucinate secondo la ricetta tradizionale di famiglia.</p></div>
+<div class="card card-top"><div class="card-icon">🥘</div><h3>Trippa</h3><p>Trippa come si faceva una volta, cotta lentamente. Un'istituzione della nostra cucina dal 1927.</p></div>
+<div class="card"><div class="card-icon">🍝</div><h3>Pasta fatta a mano</h3><p>Tagliatelle e primi della tradizione, tirati a mano ogni giorno dalla cuoca Maria.</p></div>
 </div>
 </section>
 
@@ -185,7 +281,7 @@ footer{
 </div>
 </section>
 
-<div class="booking">
+<div class="booking" id="prenota">
 <h2>Prenota un tavolo</h2>
 <p>Ti aspettiamo a Castelraimondo</p>
 <a class="btn" href="tel:+390737641844">📞 0737 641844</a>

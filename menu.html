@@ -230,11 +230,36 @@ header h1{
 <div class="grid" id="grid"><div class="stato">Caricamento menu...</div></div>
 
 <script>
-// ↓ Sostituisci con il tuo URL dopo aver pubblicato lo script
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylV2bKPv3M8t8YrXQOZLTJJ_Sz3bRZPEK7d1V3P7gctycXpAgFAZT-JySdCYctLmUe0g/exec';
+// Deployment "FINALE" — legge Config!A3:C3 (versione corretta)
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxczilq2ynSUZv5cS9BjdpZTIQcDL07ZhOkCgi0QKJuzyOf5cw1EDKRe4WJ67AYynk0Yw/exec';
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
+}
+
+// La data può arrivare come stringa ISO dal foglio: la mostriamo in italiano
+function formatData(v) {
+  const d = new Date(v);
+  if (isNaN(d)) return v;
+  const s = d.toLocaleDateString('it-IT', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+    timeZone: 'Europe/Rome'
+  });
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+// Il prezzo può arrivare come numero, testo, o come orario ISO
+// (Sheets a volte interpreta "12,50" come le 12:50)
+function formatPrezzo(v) {
+  if (typeof v === 'number') {
+    return v % 1 === 0 ? String(v) : v.toFixed(2).replace('.', ',');
+  }
+  const s = String(v);
+  if (/^\d{4}-\d{2}-\d{2}T/.test(s)) {
+    const d = new Date(s);
+    if (!isNaN(d)) return (d.getUTCHours() + d.getUTCMinutes() / 100).toFixed(2).replace('.', ',');
+  }
+  return s;
 }
 
 function makeTip(item) {
@@ -246,16 +271,16 @@ function renderMenu(dati) {
   // Prezzi
   document.getElementById('prezzi').innerHTML = `
     <div class="prezzo-box">
-      <div class="cifra">€ ${dati.prezzoCompleto}</div>
+      <div class="cifra">€ ${formatPrezzo(dati.prezzoCompleto)}</div>
       <div class="label">Menu completo</div>
     </div>
     <div class="prezzo-box" style="background:#e8e8e8">
-      <div class="cifra">€ ${dati.prezzoMezzo}</div>
+      <div class="cifra">€ ${formatPrezzo(dati.prezzoMezzo)}</div>
       <div class="label">Mezzo menu</div>
     </div>`;
 
   // Data
-  document.getElementById('data').textContent = dati.data;
+  document.getElementById('data').textContent = formatData(dati.data);
 
   // Grid
   const grid = document.getElementById('grid');
