@@ -246,6 +246,23 @@ if (localStorage.getItem('treStelleGestore') === '1') {
   document.getElementById('editLink').style.visibility = 'visible';
 }
 
+// Attivazione alternativa: 5 tocchi rapidi sul titolo TRE STELLE
+// (serve nell'app installata su iPhone, dove non si può digitare l'indirizzo;
+//  altri 5 tocchi la nascondono di nuovo)
+let titTaps = 0, titTimer;
+document.querySelector('header h1').addEventListener('click', () => {
+  titTaps++;
+  clearTimeout(titTimer);
+  titTimer = setTimeout(() => { titTaps = 0; }, 1500);
+  if (titTaps >= 5) {
+    titTaps = 0;
+    const attiva = localStorage.getItem('treStelleGestore') !== '1';
+    if (attiva) localStorage.setItem('treStelleGestore', '1');
+    else localStorage.removeItem('treStelleGestore');
+    document.getElementById('editLink').style.visibility = attiva ? 'visible' : 'hidden';
+  }
+});
+
 // La data può arrivare come stringa ISO dal foglio: la mostriamo in italiano
 function formatData(v) {
   const d = new Date(v);
