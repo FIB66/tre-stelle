@@ -222,7 +222,7 @@ header h1{
 <header>
   <a href="index.html">← Home</a>
   <h1>TRE STELLE</h1>
-  <a href="https://docs.google.com/spreadsheets/d/1AWUqkjdrz9x8Dm0-9UIwPdF5A-4y0dksZ2gxDn9sKKA/edit" target="_blank" style="font-size:18px" title="Modifica menu">✏️</a>
+  <a href="https://docs.google.com/spreadsheets/d/1AWUqkjdrz9x8Dm0-9UIwPdF5A-4y0dksZ2gxDn9sKKA/edit" target="_blank" style="font-size:18px; visibility:hidden" id="editLink" title="Modifica menu">✏️</a>
 </header>
 
 <div class="prezzi" id="prezzi"></div>
@@ -235,6 +235,15 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxczilq2ynSUZv5cS9Bj
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
+}
+
+// La matita di modifica è nascosta al pubblico: si attiva solo sui
+// dispositivi dei gestori aprendo una volta menu.html?gestione
+if (new URLSearchParams(location.search).has('gestione')) {
+  localStorage.setItem('treStelleGestore', '1');
+}
+if (localStorage.getItem('treStelleGestore') === '1') {
+  document.getElementById('editLink').style.visibility = 'visible';
 }
 
 // La data può arrivare come stringa ISO dal foglio: la mostriamo in italiano
