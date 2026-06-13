@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>QR Code - Tre Stelle</title>
+<style>
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  font-family:'Georgia', serif;
+  background:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+}
+
+.card{
+  width:300px;
+  text-align:center;
+  border:3px solid #7A1F26;
+  border-radius:16px;
+  padding:28px 24px;
+  background:white;
+}
+
+.stelle{
+  color:#F4A820;
+  font-size:22px;
+  letter-spacing:4px;
+  margin-bottom:4px;
+}
+
+h1{
+  font-family:'Georgia', serif;
+  font-size:28px;
+  color:#7A1F26;
+  letter-spacing:3px;
+  margin-bottom:2px;
+}
+
+.dal{
+  font-size:13px;
+  color:#888;
+  letter-spacing:2px;
+  margin-bottom:20px;
+}
+
+.qr-box{
+  background:#f9f9f9;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:16px;
+  display:inline-block;
+}
+
+.qr-box img{
+  width:180px;
+  height:180px;
+  display:block;
+}
+
+.istruzione{
+  font-size:13px;
+  color:#555;
+  margin-bottom:6px;
+  line-height:1.5;
+}
+
+.url{
+  font-size:11px;
+  color:#aaa;
+  word-break:break-all;
+}
+
+.divider{
+  border:none;
+  border-top:1px solid #eee;
+  margin:16px 0;
+}
+
+@media print {
+  body{ min-height:auto; padding:0; }
+  .no-print{ display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="stelle">★ ★ ★</div>
+  <h1>TRE STELLE</h1>
+  <div class="dal">Dal 1927 · Castelraimondo</div>
+
+  <div class="qr-box">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://fib66.github.io/tre-stelle/menu.html&color=7A1F26&bgcolor=f9f9f9" alt="QR Menu">
+  </div>
+
+  <p class="istruzione">📱 Inquadra il codice<br>per vedere il menu del giorno</p>
+
+  <hr class="divider">
+
+  <p class="url">fib66.github.io/tre-stelle/menu.html</p>
+</div>
+
+<div class="no-print" style="position:fixed;bottom:20px;right:20px;">
+  <button onclick="window.print()" style="background:#7A1F26;color:white;border:none;padding:12px 24px;border-radius:8px;font-size:15px;cursor:pointer;">🖨️ Stampa</button>
+</div>
+
+</body>
+</html>
