@@ -57,27 +57,36 @@ header h1{
 
 .lang-switcher{
   display:flex;
-  gap:2px;
+  gap:5px;
+  align-items:center;
 }
 
 .lang-btn{
   background:none;
-  border:none;
-  font-size:18px;
+  border:2px solid transparent;
   cursor:pointer;
-  opacity:0.4;
-  padding:2px 3px;
-  border-radius:4px;
+  padding:0;
+  border-radius:3px;
   line-height:1;
-  transition:opacity 0.2s;
+  transition:border-color 0.2s, opacity 0.2s;
+  opacity:0.55;
+}
+
+.lang-btn img{
+  display:block;
+  width:24px;
+  height:16px;
+  object-fit:cover;
+  border-radius:2px;
 }
 
 .lang-btn.active{
   opacity:1;
+  border-color:#F4A820;
 }
 
 .lang-btn:hover{
-  opacity:0.75;
+  opacity:0.85;
 }
 
 .prezzi{
@@ -252,10 +261,10 @@ header h1{
   <a href="index.html">← Home</a>
   <h1>TRE STELLE</h1>
   <div class="lang-switcher">
-    <button class="lang-btn active" id="btn-it" onclick="setLang('it')" title="Italiano">🇮🇹</button>
-    <button class="lang-btn" id="btn-en" onclick="setLang('en')" title="English">🇬🇧</button>
-    <button class="lang-btn" id="btn-es" onclick="setLang('es')" title="Español">🇪🇸</button>
-    <button class="lang-btn" id="btn-ar" onclick="setLang('ar')" title="العربية">🇸🇦</button>
+    <button class="lang-btn active" id="btn-it" onclick="setLang('it')" title="Italiano"><img src="https://flagcdn.com/w40/it.png" alt="IT"></button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')" title="English"><img src="https://flagcdn.com/w40/gb.png" alt="EN"></button>
+    <button class="lang-btn" id="btn-es" onclick="setLang('es')" title="Español"><img src="https://flagcdn.com/w40/es.png" alt="ES"></button>
+    <button class="lang-btn" id="btn-ar" onclick="setLang('ar')" title="العربية"><img src="https://flagcdn.com/w40/sa.png" alt="AR"></button>
   </div>
 </header>
 
