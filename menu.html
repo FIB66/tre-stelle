@@ -248,6 +248,13 @@ header h1{
   font-size:14px;
 }
 
+.num{
+  color:#F4A820;
+  font-size:11px;
+  font-weight:700;
+  opacity:0.8;
+}
+
 /* Indicatore traduzione in corso */
 .traduzione-in-corso .nome{
   opacity:0.5;
@@ -347,13 +354,15 @@ function renderMenu(dati) {
   const Secondi  = find('secondi');
   const Contorni = find('contorni');
 
+  let n = 1;
+
   if (Primi) {
     const col = document.createElement('div');
     col.className = 'colonna';
     col.innerHTML = `
       <div class="sezione">
         <div class="sezione-titolo" data-label="primi">${T.it.primi}</div>
-        ${Primi.map(p => `<div class="piatto" tabindex="0"><span class="nome">${esc(p.nome)}</span>${makeTip(p)}</div>`).join('')}
+        ${Primi.map(p => `<div class="piatto" tabindex="0"><span class="num">${n++}.</span> <span class="nome">${esc(p.nome)}</span>${makeTip(p)}</div>`).join('')}
       </div>`;
     grid.appendChild(col);
   }
@@ -364,7 +373,7 @@ function renderMenu(dati) {
     col.innerHTML = `
       <div class="sezione">
         <div class="sezione-titolo" data-label="secondi">${T.it.secondi}</div>
-        ${Secondi.map(p => `<div class="piatto" tabindex="0"><span class="nome">${esc(p.nome)}</span>${makeTip(p)}</div>`).join('')}
+        ${Secondi.map(p => `<div class="piatto" tabindex="0"><span class="num">${n++}.</span> <span class="nome">${esc(p.nome)}</span>${makeTip(p)}</div>`).join('')}
       </div>`;
     grid.appendChild(col);
   }
@@ -378,7 +387,7 @@ function renderMenu(dati) {
       <div class="sezione">
         <div class="sezione-titolo" data-label="contorni">${T.it.contorni}</div>
         <div class="contorni-grid">
-          ${Contorni.map(c => `<div class="contorno" tabindex="0"><span class="nome">${esc(c.nome)}</span>${makeTip(c)}</div>`).join('')}
+          ${Contorni.map(c => `<div class="contorno" tabindex="0"><span class="num">${n++}.</span> <span class="nome">${esc(c.nome)}</span>${makeTip(c)}</div>`).join('')}
         </div>
       </div>`;
     grid.appendChild(col);
