@@ -345,7 +345,11 @@ function renderMenu(dati) {
       <div class="label" data-label="mezzo">${T.it.mezzo}</div>
     </div>`;
 
-  document.getElementById('data').textContent = formatData(dati.data);
+  const oggi = new Date().toLocaleDateString('it-IT', {
+    weekday:'long', day:'numeric', month:'long', year:'numeric', timeZone:'Europe/Rome'
+  });
+  const dataStr = oggi.charAt(0).toUpperCase() + oggi.slice(1);
+  document.getElementById('data').textContent = dataStr;
 
   const grid = document.getElementById('grid');
   grid.innerHTML = '';

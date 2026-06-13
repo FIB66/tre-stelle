@@ -244,7 +244,16 @@ footer{
 
 <div class="topbar">
   <a class="btn-menu" href="menu.html">Menu del Giorno</a>
+  <span id="data-oggi" style="color:white;font-size:13px;opacity:0.85;margin-left:14px;"></span>
 </div>
+<script>
+(function(){
+  const oggi = new Date().toLocaleDateString('it-IT', {
+    weekday:'long', day:'numeric', month:'long', timeZone:'Europe/Rome'
+  });
+  document.getElementById('data-oggi').textContent = oggi.charAt(0).toUpperCase() + oggi.slice(1);
+})();
+</script>
 
 <div class="hero">
   <div class="hero-content">
