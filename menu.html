@@ -55,6 +55,31 @@ header h1{
   letter-spacing:3px;
 }
 
+.lang-switcher{
+  display:flex;
+  gap:2px;
+}
+
+.lang-btn{
+  background:none;
+  border:none;
+  font-size:18px;
+  cursor:pointer;
+  opacity:0.4;
+  padding:2px 3px;
+  border-radius:4px;
+  line-height:1;
+  transition:opacity 0.2s;
+}
+
+.lang-btn.active{
+  opacity:1;
+}
+
+.lang-btn:hover{
+  opacity:0.75;
+}
+
 .prezzi{
   display:flex;
   gap:8px;
@@ -176,7 +201,6 @@ header h1{
   font-size:11px;
   font-weight:400;
   border-radius:10px;
-  white-space:nowrap;
   z-index:10;
   pointer-events:none;
   overflow:hidden;
@@ -214,6 +238,11 @@ header h1{
   color:#aaa;
   font-size:14px;
 }
+
+/* Indicatore traduzione in corso */
+.traduzione-in-corso .nome{
+  opacity:0.5;
+}
 </style>
 </head>
 
@@ -222,7 +251,12 @@ header h1{
 <header>
   <a href="index.html">← Home</a>
   <h1>TRE STELLE</h1>
-  <span style="width:40px"></span>
+  <div class="lang-switcher">
+    <button class="lang-btn active" id="btn-it" onclick="setLang('it')" title="Italiano">🇮🇹</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')" title="English">🇬🇧</button>
+    <button class="lang-btn" id="btn-es" onclick="setLang('es')" title="Español">🇪🇸</button>
+    <button class="lang-btn" id="btn-ar" onclick="setLang('ar')" title="العربية">🇸🇦</button>
+  </div>
 </header>
 
 <div class="prezzi" id="prezzi"></div>
@@ -237,14 +271,11 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
 
-// Qualsiasi testo proveniente dal foglio Google viene trattato come puro
-// testo, mai come codice (protezione nel caso il foglio venisse compromesso)
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c =>
     ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 }
 
-// La data può arrivare come stringa ISO dal foglio: la mostriamo in italiano
 function formatData(v) {
   const d = new Date(v);
   if (isNaN(d)) return v;
@@ -255,8 +286,6 @@ function formatData(v) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-// Il prezzo può arrivare come numero, testo, o come orario ISO
-// (Sheets a volte interpreta "12,50" come le 12:50)
 function formatPrezzo(v) {
   if (typeof v === 'number') {
     return v % 1 === 0 ? String(v) : v.toFixed(2).replace('.', ',');
@@ -269,27 +298,35 @@ function formatPrezzo(v) {
   return s;
 }
 
+const T = {
+  it: { primi:'Primi', secondi:'Secondi', contorni:'Contorni', completo:'Menu completo', mezzo:'Mezzo menu' },
+  en: { primi:'First courses', secondi:'Main courses', contorni:'Side dishes', completo:'Full menu', mezzo:'Half menu' },
+  es: { primi:'Primeros', secondi:'Segundos', contorni:'Guarniciones', completo:'Menú completo', mezzo:'Medio menú' },
+  ar: { primi:'أطباق أولى', secondi:'أطباق رئيسية', contorni:'أطباق جانبية', completo:'القائمة الكاملة', mezzo:'نصف قائمة' }
+};
+
+let currentLang = 'it';
+const cache = {};
+let nomiOriginali = [];
+
 function makeTip(item) {
   if (!item.ingredienti) return '';
   return `<div class="tip"><span>${esc(item.ingredienti)}</span></div>`;
 }
 
 function renderMenu(dati) {
-  // Prezzi
   document.getElementById('prezzi').innerHTML = `
     <div class="prezzo-box">
       <div class="cifra">€ ${esc(formatPrezzo(dati.prezzoCompleto))}</div>
-      <div class="label">Menu completo</div>
+      <div class="label" data-label="completo">${T.it.completo}</div>
     </div>
     <div class="prezzo-box" style="background:#e8e8e8">
       <div class="cifra">€ ${esc(formatPrezzo(dati.prezzoMezzo))}</div>
-      <div class="label">Mezzo menu</div>
+      <div class="label" data-label="mezzo">${T.it.mezzo}</div>
     </div>`;
 
-  // Data
   document.getElementById('data').textContent = formatData(dati.data);
 
-  // Grid
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
 
@@ -297,35 +334,32 @@ function renderMenu(dati) {
     const key = Object.keys(dati.sezioni).find(k => k.toLowerCase() === name.toLowerCase());
     return key ? dati.sezioni[key] : null;
   };
-  const Primi = find('primi');
-  const Secondi = find('secondi');
+  const Primi    = find('primi');
+  const Secondi  = find('secondi');
   const Contorni = find('contorni');
 
-  // Colonna Primi
   if (Primi) {
     const col = document.createElement('div');
     col.className = 'colonna';
     col.innerHTML = `
       <div class="sezione">
-        <div class="sezione-titolo">Primi</div>
-        ${Primi.map(p => `<div class="piatto" tabindex="0">${esc(p.nome)}${makeTip(p)}</div>`).join('')}
+        <div class="sezione-titolo" data-label="primi">${T.it.primi}</div>
+        ${Primi.map(p => `<div class="piatto" tabindex="0"><span class="nome">${esc(p.nome)}</span>${makeTip(p)}</div>`).join('')}
       </div>`;
     grid.appendChild(col);
   }
 
-  // Colonna Secondi
   if (Secondi) {
     const col = document.createElement('div');
     col.className = 'colonna';
     col.innerHTML = `
       <div class="sezione">
-        <div class="sezione-titolo">Secondi</div>
-        ${Secondi.map(p => `<div class="piatto" tabindex="0">${esc(p.nome)}${makeTip(p)}</div>`).join('')}
+        <div class="sezione-titolo" data-label="secondi">${T.it.secondi}</div>
+        ${Secondi.map(p => `<div class="piatto" tabindex="0"><span class="nome">${esc(p.nome)}</span>${makeTip(p)}</div>`).join('')}
       </div>`;
     grid.appendChild(col);
   }
 
-  // Contorni (larghezza piena)
   if (Contorni) {
     const col = document.createElement('div');
     col.className = 'colonna';
@@ -333,13 +367,88 @@ function renderMenu(dati) {
     col.style.marginTop = '-6px';
     col.innerHTML = `
       <div class="sezione">
-        <div class="sezione-titolo">Contorni</div>
+        <div class="sezione-titolo" data-label="contorni">${T.it.contorni}</div>
         <div class="contorni-grid">
-          ${Contorni.map(c => `<div class="contorno" tabindex="0">${esc(c.nome)}${makeTip(c)}</div>`).join('')}
+          ${Contorni.map(c => `<div class="contorno" tabindex="0"><span class="nome">${esc(c.nome)}</span>${makeTip(c)}</div>`).join('')}
         </div>
       </div>`;
     grid.appendChild(col);
   }
+
+  nomiOriginali = Array.from(document.querySelectorAll('.nome')).map(el => ({
+    el,
+    testo: el.textContent
+  }));
+}
+
+async function tradurciPiatti(lang) {
+  if (lang === 'it') {
+    nomiOriginali.forEach(({ el, testo }) => el.textContent = testo);
+    return;
+  }
+
+  if (cache[lang]) {
+    cache[lang].forEach((testo, i) => {
+      if (nomiOriginali[i]) nomiOriginali[i].el.textContent = testo;
+    });
+    return;
+  }
+
+  document.getElementById('grid').classList.add('traduzione-in-corso');
+
+  const SEP = ' || ';
+  const testi = nomiOriginali.map(n => n.testo);
+  const chunks = [];
+  let chunk = [], len = 0;
+  for (const t of testi) {
+    if (len + t.length + SEP.length > 450 && chunk.length) {
+      chunks.push(chunk); chunk = []; len = 0;
+    }
+    chunk.push(t);
+    len += t.length + SEP.length;
+  }
+  if (chunk.length) chunks.push(chunk);
+
+  try {
+    const tradotti = [];
+    for (const c of chunks) {
+      const q = c.join(SEP);
+      const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(q)}&langpair=it|${lang}`);
+      const json = await res.json();
+      const parti = json.responseData.translatedText.split(SEP);
+      tradotti.push(...parti.map((t, i) => t.trim() || c[i]));
+    }
+    cache[lang] = tradotti;
+    tradotti.forEach((testo, i) => {
+      if (nomiOriginali[i]) nomiOriginali[i].el.textContent = testo;
+    });
+  } catch {
+    // In caso di errore mantiene i nomi italiani
+  }
+
+  document.getElementById('grid').classList.remove('traduzione-in-corso');
+}
+
+function applicaEtichette(lang) {
+  const t = T[lang];
+  document.querySelectorAll('[data-label]').forEach(el => {
+    const key = el.getAttribute('data-label');
+    if (t[key]) el.textContent = t[key];
+  });
+}
+
+async function setLang(lang) {
+  if (lang === currentLang) return;
+  currentLang = lang;
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+  applicaEtichette(lang);
+  await tradurciPiatti(lang);
 }
 
 fetch(SCRIPT_URL + '?t=' + Date.now())
@@ -350,19 +459,15 @@ fetch(SCRIPT_URL + '?t=' + Date.now())
       '<div class="stato">Menu non disponibile. Riprova più tardi.</div>';
   });
 
-// Tap per mostrare/nascondere ingredienti su mobile
 document.addEventListener('click', e => {
   const el = e.target.closest('.piatto, .contorno');
   if (el) {
     const wasActive = el.classList.contains('active');
-    // Chiude tutti
     document.querySelectorAll('.piatto.active, .contorno.active')
       .forEach(x => x.classList.remove('active'));
-    // Apre quello toccato (toggle)
     if (!wasActive) el.classList.add('active');
     e.stopPropagation();
   } else {
-    // Tap fuori: chiude tutto
     document.querySelectorAll('.piatto.active, .contorno.active')
       .forEach(x => x.classList.remove('active'));
   }
