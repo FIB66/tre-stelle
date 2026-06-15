@@ -134,10 +134,22 @@ header h1{
   text-transform:uppercase;
 }
 
+.incluso{
+  width:40%;
+  min-width:300px;
+  text-align:center;
+  font-size:11px;
+  color:#ffffff;
+  font-style:italic;
+  padding:4px 10px 2px;
+  letter-spacing:0.3px;
+}
+
 .data{
   text-align:center;
   font-size:13px;
-  color:#aaa;
+  font-weight:700;
+  color:#F4A820;
   letter-spacing:1px;
   text-transform:uppercase;
   padding-bottom:10px;
@@ -298,6 +310,7 @@ header h1{
 </header>
 
 <div class="prezzi" id="prezzi"></div>
+<div class="incluso" id="incluso"></div>
 <div class="data" id="data">Caricamento...</div>
 <div class="grid" id="grid"><div class="stato">Caricamento menu...</div></div>
 
@@ -337,15 +350,15 @@ function formatPrezzo(v) {
 }
 
 const T = {
-  it: { primi:'Primi', secondi:'Secondi', contorni:'Contorni', completo:'Menu completo', mezzo:'Mezzo menu' },
-  en: { primi:'First courses', secondi:'Main courses', contorni:'Side dishes', completo:'Full menu', mezzo:'Half menu' },
-  es: { primi:'Primeros', secondi:'Segundos', contorni:'Guarniciones', completo:'Menú completo', mezzo:'Medio menú' },
-  ar: { primi:'أطباق أولى', secondi:'أطباق رئيسية', contorni:'أطباق جانبية', completo:'القائمة الكاملة', mezzo:'نصف قائمة' },
-  pt: { primi:'Primeiros pratos', secondi:'Pratos principais', contorni:'Acompanhamentos', completo:'Menu completo', mezzo:'Meia ementa' },
-  ru: { primi:'Первые блюда', secondi:'Вторые блюда', contorni:'Гарниры', completo:'Полное меню', mezzo:'Полу-меню' },
-  fr: { primi:'Entrées', secondi:'Plats principaux', contorni:'Accompagnements', completo:'Menu complet', mezzo:'Demi-menu' },
-  sq: { primi:'Pjata të para', secondi:'Pjata kryesore', contorni:'Garnitura', completo:'Menu i plotë', mezzo:'Gjysmë menu' },
-  ro: { primi:'Feluri principale', secondi:'Feluri secundare', contorni:'Garnituri', completo:'Meniu complet', mezzo:'Jumătate de meniu' }
+  it: { primi:'Primi', secondi:'Secondi', contorni:'Contorni', completo:'Menu completo', mezzo:'Mezzo menu', incluso:'Acqua, pane, caffè, coperto e ¼ di vino compresi' },
+  en: { primi:'First courses', secondi:'Main courses', contorni:'Side dishes', completo:'Full menu', mezzo:'Half menu', incluso:'Water, bread, coffee, cover charge and ¼ wine included' },
+  es: { primi:'Primeros', secondi:'Segundos', contorni:'Guarniciones', completo:'Menú completo', mezzo:'Medio menú', incluso:'Agua, pan, café, cubierto y ¼ de vino incluidos' },
+  ar: { primi:'أطباق أولى', secondi:'أطباق رئيسية', contorni:'أطباق جانبية', completo:'القائمة الكاملة', mezzo:'نصف قائمة', incluso:'ماء، خبز، قهوة، غطاء وربع زجاجة نبيذ شاملة' },
+  pt: { primi:'Primeiros pratos', secondi:'Pratos principais', contorni:'Acompanhamentos', completo:'Menu completo', mezzo:'Meia ementa', incluso:'Água, pão, café, couvert e ¼ de vinho incluídos' },
+  ru: { primi:'Первые блюда', secondi:'Вторые блюда', contorni:'Гарниры', completo:'Полное меню', mezzo:'Полу-меню', incluso:'Вода, хлеб, кофе, сервировка и ¼ вина включены' },
+  fr: { primi:'Entrées', secondi:'Plats principaux', contorni:'Accompagnements', completo:'Menu complet', mezzo:'Demi-menu', incluso:'Eau, pain, café, couvert et ¼ de vin compris' },
+  sq: { primi:'Pjata të para', secondi:'Pjata kryesore', contorni:'Garnitura', completo:'Menu i plotë', mezzo:'Gjysmë menu', incluso:'Ujë, bukë, kafe, kopertinë dhe ¼ verë të përfshira' },
+  ro: { primi:'Feluri principale', secondi:'Feluri secundare', contorni:'Garnituri', completo:'Meniu complet', mezzo:'Jumătate de meniu', incluso:'Apă, pâine, cafea, serviciu și ¼ vin incluse' }
 };
 
 let currentLang = 'it';
@@ -373,6 +386,7 @@ function renderMenu(dati) {
   });
   const dataStr = oggi.charAt(0).toUpperCase() + oggi.slice(1);
   document.getElementById('data').textContent = dataStr;
+  document.getElementById('incluso').textContent = T.it.incluso;
 
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
@@ -484,6 +498,7 @@ function applicaEtichette(lang) {
     const key = el.getAttribute('data-label');
     if (t[key]) el.textContent = t[key];
   });
+  document.getElementById('incluso').textContent = t.incluso;
 }
 
 async function setLang(lang) {
