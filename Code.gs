@@ -1,17 +1,12 @@
 // Google Apps Script - Tre Stelle Menu Publisher
-// Incolla questo codice in: script.google.com → progetto del menu
-// Dopo ogni modifica: Distribuisci → Gestisci deployment → aggiorna "FINALE" a nuova versione
-
-const GIORNI = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
-const MESI = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-              'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-
-function formatData_(v) {
-  if (v instanceof Date) {
-    return GIORNI[v.getDay()] + ' ' + v.getDate() + ' ' + MESI[v.getMonth()] + ' ' + v.getFullYear();
-  }
-  return String(v).trim();
-}
+// Questo file riflette il codice REALMENTE distribuito (deployment "FINALE", @7+).
+// Distribuzione gestita via clasp dal PC di Giorgio:
+//   cd <cartella progetto> && clasp push --force
+//   clasp redeploy AKfycbxczilq2ynSUZv5cS9BjdpZTIQcDL07ZhOkCgi0QKJuzyOf5cw1EDKRe4WJ67AYynk0Yw -d "FINALE"
+//
+// NB: il foglio "Menu" (menu del giorno) NON ha riga di intestazione: la riga 1 è
+// già un piatto, quindi si leggono TUTTE le righe (niente slice). Le schede "Carta"
+// e "Dolci" invece hanno l'intestazione (Nome | Prezzo) in riga 1 → si salta con slice(1).
 
 function formatPrezzo_(v) {
   // Sheets a volte interpreta "12,50" come orario 12:50 → la cella diventa una data
@@ -24,11 +19,11 @@ function formatPrezzo_(v) {
   return String(v).trim();
 }
 
-// Legge una scheda "listino" semplice: riga 1 = intestazioni (Nome | Prezzo),
-// dati dalla riga 2. Restituisce [] se la scheda non esiste ancora.
+// Scheda listino: riga 1 = intestazioni (Nome | Prezzo), dati dalla riga 2.
+// Restituisce [] se la scheda non esiste ancora.
 function leggiListino_(sheet) {
   if (!sheet) return [];
-  const rows = sheet.getDataRange().getValues().slice(1); // salta intestazione
+  const rows = sheet.getDataRange().getValues().slice(1);
   const out = [];
   rows.forEach(([nome, prezzo]) => {
     if (!nome) return; // riga vuota
@@ -44,9 +39,9 @@ function doGet() {
   const config = ss.getSheetByName('Config');
   const configData = config.getRange('A3:C3').getValues()[0];
 
-  // Foglio Menu: Sezione, Nome, Ingredienti, FotoURL (dati dalla riga 2)
+  // Foglio Menu del giorno: nessuna intestazione → si leggono tutte le righe
   const menu = ss.getSheetByName('Menu');
-  const rows = menu.getDataRange().getValues().slice(1); // salta intestazione
+  const rows = menu.getDataRange().getValues();
 
   const sezioni = {};
   rows.forEach(([sezione, nome, ingredienti, foto]) => {
@@ -56,14 +51,14 @@ function doGet() {
     sezioni[key].push({ nome: String(nome).trim(), ingredienti, foto });
   });
 
-  // Schede listino (Nome | Prezzo): menu alla carta e dolci
+  // Nuove schede: menu alla carta e dolci (Nome | Prezzo)
   const carta = leggiListino_(ss.getSheetByName('Carta'));
   const dolci = leggiListino_(ss.getSheetByName('Dolci'));
 
   const output = {
-    data: formatData_(configData[0]),
-    prezzoCompleto: formatPrezzo_(configData[1]),
-    prezzoMezzo: formatPrezzo_(configData[2]),
+    data: configData[0],
+    prezzoCompleto: configData[1],
+    prezzoMezzo: configData[2],
     sezioni,
     carta,
     dolci
