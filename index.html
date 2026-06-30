@@ -123,8 +123,11 @@ h1{
   right:0;
   z-index:100;
   display:flex;
+  flex-wrap:wrap;
+  align-items:center;
   justify-content:center;
-  padding:12px;
+  gap:8px;
+  padding:10px 12px;
   background:rgba(0,0,0,0.35);
 }
 
@@ -135,7 +138,31 @@ h1{
   font-size:15px;
   letter-spacing:1px;
   border-radius:30px;
-  padding:12px 32px;
+  padding:11px 26px;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.btn-carta{
+  background:#fff;
+  color:#7A1F26;
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:1px;
+  border-radius:30px;
+  padding:11px 22px;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.btn-dolci{
+  background:#C9788F;
+  color:#1a1a1a;
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:1px;
+  border-radius:30px;
+  padding:11px 22px;
   text-decoration:none;
   display:inline-block;
 }
@@ -147,10 +174,9 @@ h1{
   font-size:15px;
   letter-spacing:1px;
   border-radius:30px;
-  padding:12px 32px;
+  padding:11px 22px;
   text-decoration:none;
   display:inline-block;
-  margin-left:12px;
 }
 
 section{
@@ -257,8 +283,10 @@ footer{
 
 <div class="topbar">
   <a class="btn-menu" href="menu.html">Menu del Giorno</a>
-  <span id="data-oggi" style="color:white;font-size:13px;opacity:0.85;margin-left:14px;"></span>
+  <a class="btn-carta" href="carta.html">Menù alla Carta</a>
+  <a class="btn-dolci" href="carta.html?tipo=dolci">Dolci</a>
   <a class="btn-qr" href="qr.html">📲 QR Menu</a>
+  <span id="data-oggi" style="color:white;font-size:13px;opacity:0.85;width:100%;text-align:center;"></span>
 </div>
 <script>
 (function(){
