@@ -24,6 +24,19 @@ function formatPrezzo_(v) {
   return String(v).trim();
 }
 
+// Legge una scheda "listino" semplice: riga 1 = intestazioni (Nome | Prezzo),
+// dati dalla riga 2. Restituisce [] se la scheda non esiste ancora.
+function leggiListino_(sheet) {
+  if (!sheet) return [];
+  const rows = sheet.getDataRange().getValues().slice(1); // salta intestazione
+  const out = [];
+  rows.forEach(([nome, prezzo]) => {
+    if (!nome) return; // riga vuota
+    out.push({ nome: String(nome).trim(), prezzo: formatPrezzo_(prezzo) });
+  });
+  return out;
+}
+
 function doGet() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
 
@@ -43,11 +56,17 @@ function doGet() {
     sezioni[key].push({ nome: String(nome).trim(), ingredienti, foto });
   });
 
+  // Schede listino (Nome | Prezzo): menu alla carta e dolci
+  const carta = leggiListino_(ss.getSheetByName('Carta'));
+  const dolci = leggiListino_(ss.getSheetByName('Dolci'));
+
   const output = {
     data: formatData_(configData[0]),
     prezzoCompleto: formatPrezzo_(configData[1]),
     prezzoMezzo: formatPrezzo_(configData[2]),
-    sezioni
+    sezioni,
+    carta,
+    dolci
   };
 
   return ContentService
