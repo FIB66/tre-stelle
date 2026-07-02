@@ -19,15 +19,23 @@ function formatPrezzo_(v) {
   return String(v).trim();
 }
 
-// Scheda listino: riga 1 = intestazioni (Nome | Prezzo), dati dalla riga 2.
+// Scheda listino: riga 1 = intestazioni, dati dalla riga 2.
+// Due formati supportati (riconosciuti dall'intestazione della colonna A):
+//   Nome | Prezzo                → sezione vuota (lista unica)
+//   Sezione | Nome | Prezzo     → piatti raggruppati per sezione su carta.html
 // Restituisce [] se la scheda non esiste ancora.
 function leggiListino_(sheet) {
   if (!sheet) return [];
-  const rows = sheet.getDataRange().getValues().slice(1);
+  const data = sheet.getDataRange().getValues();
+  if (data.length < 2) return [];
+  const haSezione = String(data[0][0]).trim().toLowerCase().indexOf('sezion') === 0;
   const out = [];
-  rows.forEach(([nome, prezzo]) => {
+  data.slice(1).forEach(function (r) {
+    const sezione = haSezione ? String(r[0] || '').trim() : '';
+    const nome = haSezione ? r[1] : r[0];
+    const prezzo = haSezione ? r[2] : r[1];
     if (!nome) return; // riga vuota
-    out.push({ nome: String(nome).trim(), prezzo: formatPrezzo_(prezzo) });
+    out.push({ sezione: sezione, nome: String(nome).trim(), prezzo: formatPrezzo_(prezzo) });
   });
   return out;
 }

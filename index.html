@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Ristorante Tre Stelle – Lumache e Trippa | Cucina Marchigiana a Castelraimondo (MC)</title>
 <meta name="description" content="Dal 1927 il Ristorante Tre Stelle di Castelraimondo è il punto di riferimento nelle Marche per le lumache e la trippa. Cucina marchigiana autentica, menu del giorno, pasta fatta a mano. Via Roma 33, Castelraimondo (MC).">
-<link rel="canonical" href="https://fib66.github.io/tre-stelle/">
+<link rel="canonical" href="https://3stelle.eu/">
 
 <!-- Open Graph (condivisione WhatsApp / Facebook / Instagram) -->
 <meta property="og:type" content="restaurant">
 <meta property="og:title" content="Ristorante Tre Stelle – Lumache e Trippa dal 1927">
 <meta property="og:description" content="Il riferimento marchigiano per lumache e trippa. Cucina tradizionale a Castelraimondo (MC). Menu del giorno sempre aggiornato.">
-<meta property="og:url" content="https://fib66.github.io/tre-stelle/">
-<meta property="og:image" content="https://fib66.github.io/tre-stelle/icon-512.png">
+<meta property="og:url" content="https://3stelle.eu/">
+<meta property="og:image" content="https://3stelle.eu/icon-512.png">
 <meta property="og:locale" content="it_IT">
 
 <!-- PWA -->
@@ -26,8 +26,8 @@
   "@context": "https://schema.org",
   "@type": "Restaurant",
   "name": "Ristorante Tre Stelle",
-  "url": "https://fib66.github.io/tre-stelle/",
-  "image": "https://fib66.github.io/tre-stelle/icon-512.png",
+  "url": "https://3stelle.eu/",
+  "image": "https://3stelle.eu/icon-512.png",
   "telephone": "+390737641844",
   "servesCuisine": ["Cucina marchigiana", "Lumache", "Trippa", "Cucina tradizionale italiana"],
   "priceRange": "€€",
@@ -55,7 +55,7 @@
     }
   ],
   "sameAs": ["https://www.instagram.com/ristorante_tre_stelle"],
-  "hasMenu": "https://fib66.github.io/tre-stelle/menu.html",
+  "hasMenu": "https://3stelle.eu/menu.html",
   "acceptsReservations": "True"
 }
 </script>
@@ -63,16 +63,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --bordeaux:#7A1F26;
+  --gold:#F4A820;
+  --cream:#F7F3EC;
+  --ink:#2C2C2C;
+}
+
+*{ box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+
 body{
   margin:0;
   font-family:'Open Sans', sans-serif;
-  background:#F7F3EC;
-  color:#2C2C2C;
+  background:var(--cream);
+  color:var(--ink);
 }
 
 .hero{
-  height:100vh;
-  background:url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5') center/cover no-repeat;
+  min-height:100vh;
+  min-height:100svh;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(244,168,32,0.20), transparent 55%),
+    radial-gradient(ellipse at 50% 115%, rgba(0,0,0,0.5), transparent 60%),
+    linear-gradient(165deg, #8E2630 0%, #7A1F26 45%, #521318 100%);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -84,36 +99,122 @@ body{
   content:'';
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,0.55);
+  background-image:radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1.6px);
+  background-size:26px 26px;
+  pointer-events:none;
+}
+
+.hero-ornamento{
+  color:var(--gold);
+  font-size:18px;
+  letter-spacing:6px;
+  margin-top:22px;
+  opacity:0.85;
 }
 
 .hero-content{
   position:relative;
+  z-index:1;
   color:white;
   max-width:800px;
-  padding:20px;
+  padding:110px 20px 60px;
+  animation:heroIn 1.1s ease both;
+}
+
+@keyframes heroIn{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:none; }
+}
+
+.hero-stars{
+  color:var(--gold);
+  font-size:20px;
+  letter-spacing:14px;
+  margin-bottom:12px;
+  text-shadow:0 2px 8px rgba(0,0,0,0.4);
 }
 
 h1{
   font-family:'Playfair Display', serif;
-  font-size:60px;
+  font-size:62px;
+  letter-spacing:6px;
+  line-height:1.05;
   margin:0;
+  text-shadow:0 3px 14px rgba(0,0,0,0.45);
+}
+
+.hero-sub{
+  text-transform:uppercase;
+  letter-spacing:4px;
+  font-size:14px;
+  font-weight:600;
+  color:#F0E8DA;
+  margin:14px 0 0;
+}
+
+.tagline{
+  font-family:'Playfair Display', serif;
+  font-size:22px;
+  font-style:italic;
+  margin-top:16px;
+}
+
+.tagline strong{
+  color:var(--gold);
+}
+
+.hero-actions{
+  margin-top:30px;
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
 }
 
 .btn{
   display:inline-block;
-  margin-top:20px;
-  margin-left:10px;
-  padding:12px 25px;
-  background:#7A1F26;
+  padding:13px 30px;
+  background:var(--bordeaux);
   color:white;
   text-decoration:none;
   border-radius:30px;
+  font-weight:600;
+  letter-spacing:0.5px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.25);
+  transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  background:#8E2630;
 }
 
 .btn-outline{
   background:transparent;
-  border:2px solid white;
+  border:2px solid rgba(255,255,255,0.85);
+  box-shadow:none;
+}
+
+.btn-outline:hover{
+  background:rgba(255,255,255,0.14);
+}
+
+.scroll-hint{
+  position:absolute;
+  bottom:22px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:1;
+  color:rgba(255,255,255,0.8);
+  font-size:26px;
+  text-decoration:none;
+  animation:bounce 2.2s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{ transform:translate(-50%,0); }
+  50%{ transform:translate(-50%,8px); }
 }
 
 .topbar{
@@ -128,55 +229,50 @@ h1{
   justify-content:center;
   gap:8px;
   padding:10px 12px;
-  background:rgba(0,0,0,0.35);
+  background:rgba(22,9,11,0.45);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+.btn-menu, .btn-carta, .btn-dolci, .btn-qr{
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:1px;
+  border-radius:30px;
+  padding:10px 20px;
+  text-decoration:none;
+  display:inline-block;
+  border:1.5px solid transparent;
+  transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-menu:hover, .btn-carta:hover, .btn-dolci:hover, .btn-qr:hover{
+  transform:translateY(-2px);
 }
 
 .btn-menu{
-  background:#F4A820;
-  color:#1a1a1a;
+  background:var(--gold);
+  border-color:var(--gold);
+  color:#3A1013;
   font-weight:700;
-  font-size:15px;
-  letter-spacing:1px;
-  border-radius:30px;
-  padding:11px 26px;
-  text-decoration:none;
-  display:inline-block;
+  padding:10px 24px;
 }
 
-.btn-carta{
-  background:#fff;
-  color:#7A1F26;
-  font-weight:700;
-  font-size:15px;
-  letter-spacing:1px;
-  border-radius:30px;
-  padding:11px 22px;
-  text-decoration:none;
-  display:inline-block;
+.btn-menu:hover{
+  background:#FFB733;
+  border-color:#FFB733;
 }
 
-.btn-dolci{
-  background:#C9788F;
-  color:#1a1a1a;
-  font-weight:700;
-  font-size:15px;
-  letter-spacing:1px;
-  border-radius:30px;
-  padding:11px 22px;
-  text-decoration:none;
-  display:inline-block;
+.btn-carta, .btn-dolci, .btn-qr{
+  background:rgba(255,255,255,0.07);
+  border-color:rgba(255,255,255,0.5);
+  color:#F5EDE0;
 }
 
-.btn-qr{
-  background:#4CAF7D;
-  color:white;
-  font-weight:700;
-  font-size:15px;
-  letter-spacing:1px;
-  border-radius:30px;
-  padding:11px 22px;
-  text-decoration:none;
-  display:inline-block;
+.btn-carta:hover, .btn-dolci:hover, .btn-qr:hover{
+  background:rgba(255,255,255,0.92);
+  border-color:#fff;
+  color:var(--bordeaux);
 }
 
 section{
@@ -186,18 +282,56 @@ section{
 h2{
   text-align:center;
   font-family:'Playfair Display', serif;
-  margin-bottom:20px;
+  font-size:32px;
+  margin:0 0 14px;
+}
+
+h2::after{
+  content:'';
+  display:block;
+  width:70px;
+  height:3px;
+  background:var(--gold);
+  border-radius:2px;
+  margin:14px auto 0;
+}
+
+section > h2{
+  margin-bottom:36px;
 }
 
 .story{
   display:flex;
-  gap:30px;
+  gap:40px;
   align-items:center;
 }
 
-.story img{
-  width:50%;
-  border-radius:10px;
+.story-foto{
+  width:40%;
+  flex-shrink:0;
+  margin:0;
+}
+
+.story-foto img{
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  border-radius:12px;
+  box-shadow:0 14px 32px rgba(0,0,0,0.18);
+  display:block;
+}
+
+.story-foto figcaption{
+  text-align:center;
+  font-size:13px;
+  font-style:italic;
+  color:#7a6a5a;
+  margin-top:10px;
+}
+
+.story p{
+  font-size:17px;
+  line-height:1.8;
 }
 
 .cards{
@@ -208,73 +342,111 @@ h2{
 .card{
   flex:1;
   background:white;
-  padding:20px;
-  border-radius:10px;
+  padding:28px 22px;
+  border-radius:12px;
+  text-align:center;
+  border-top:4px solid var(--gold);
+  box-shadow:0 6px 18px rgba(0,0,0,0.06);
+  transition:transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 14px 30px rgba(0,0,0,0.12);
 }
 
 .card h3{
   font-family:'Playfair Display', serif;
-  margin:8px 0 6px;
-  font-size:19px;
+  margin:10px 0 8px;
+  font-size:20px;
 }
 
 .card p{
   margin:0;
   font-size:14px;
-  line-height:1.5;
+  line-height:1.6;
   color:#555;
 }
 
 .card-icon{
-  font-size:34px;
+  font-size:38px;
 }
 
 .card-top{
-  border-top:4px solid #7A1F26;
-}
-
-.tagline{
-  font-size:20px;
-  font-style:italic;
-  margin-top:6px;
-}
-
-.tagline strong{
-  color:#F4A820;
-}
-
-@media (max-width:700px){
-  h1{ font-size:42px; }
-  .story{ flex-direction:column; }
-  .story img{ width:100%; }
-  .cards{ flex-direction:column; }
-  .gallery{ grid-template-columns:1fr; }
-  section{ padding:50px 6%; }
-}
-
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.gallery img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  border-radius:10px;
+  border-top-color:var(--bordeaux);
 }
 
 .booking{
-  background:#7A1F26;
+  background:linear-gradient(160deg, #7A1F26 0%, #5A151B 100%);
   color:white;
   text-align:center;
   padding:80px 10%;
 }
 
+.booking p{
+  font-size:17px;
+  opacity:0.9;
+  margin:0 0 24px;
+}
+
+.booking .btn{
+  margin:6px;
+  font-size:16px;
+}
+
+.btn-tel{
+  background:var(--gold);
+  color:#1a1a1a;
+}
+
+.btn-tel:hover{
+  background:#FFB733;
+}
+
+.btn-wa{
+  background:#25D366;
+  color:#0b3d22;
+}
+
+.btn-wa:hover{
+  background:#3BDF77;
+}
+
 footer{
   text-align:center;
-  padding:30px;
+  padding:30px 20px 34px;
+  border-top:1px solid rgba(122,31,38,0.15);
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+  .hero-content{ animation:none; }
+  .scroll-hint{ animation:none; }
+  html{ scroll-behavior:auto; }
+}
+
+@media (max-width:700px){
+  h1{ font-size:42px; letter-spacing:3px; }
+  h2{ font-size:26px; }
+  .hero-content{ padding-top:150px; }
+  .topbar{ gap:6px; padding:8px 8px; }
+  .btn-menu, .btn-carta, .btn-dolci, .btn-qr{ font-size:13px; padding:9px 14px; letter-spacing:0.5px; }
+  .tagline{ font-size:18px; }
+  .story{ flex-direction:column; }
+  .story-foto{ width:100%; max-width:340px; margin:0 auto; }
+  .cards{ flex-direction:column; }
+  section{ padding:50px 6%; }
 }
 </style>
 </head>
@@ -285,7 +457,7 @@ footer{
   <a class="btn-menu" href="menu.html">Menu del Giorno</a>
   <a class="btn-carta" href="carta.html">Menù alla Carta</a>
   <a class="btn-dolci" href="carta.html?tipo=dolci">Dolci</a>
-  <a class="btn-qr" href="qr.html">📲 QR Menu</a>
+  <a class="btn-qr" href="qr.html">QR Menu</a>
   <span id="data-oggi" style="color:white;font-size:13px;opacity:0.85;width:100%;text-align:center;"></span>
 </div>
 <script>
@@ -299,22 +471,31 @@ footer{
 
 <div class="hero">
   <div class="hero-content">
+    <div class="hero-stars">★ ★ ★</div>
     <h1>TRE STELLE</h1>
-    <p>Dal 1927 • Castelraimondo</p>
+    <p class="hero-sub">Dal 1927 • Castelraimondo</p>
     <p class="tagline">Il riferimento marchigiano per <strong>lumache</strong> e <strong>trippa</strong></p>
-    <a class="btn" href="#prenota">Prenota un Tavolo</a>
+    <div class="hero-actions">
+      <a class="btn" href="#prenota">Prenota un Tavolo</a>
+      <a class="btn btn-outline" href="menu.html">Vedi il Menu</a>
+    </div>
+    <div class="hero-ornamento">✦ &nbsp;❦&nbsp; ✦</div>
   </div>
+  <a class="scroll-hint" href="#storia" aria-label="Scorri alla nostra storia">⌄</a>
 </div>
 
-<section>
+<section id="storia" class="reveal">
 <h2>La nostra storia</h2>
 <div class="story">
-<img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba" alt="Ristorante Tre Stelle, Castelraimondo"/>
+<figure class="story-foto">
+  <img src="tagliolini-tartufo.jpeg" alt="Tagliolini al tartufo fatti in casa - Ristorante Tre Stelle" loading="lazy"/>
+  <figcaption>I nostri tagliolini al tartufo, fatti a mano</figcaption>
+</figure>
 <p>Dal 1927 il Ristorante Tre Stelle porta avanti la tradizione marchigiana con passione e dedizione. Riccardo Antonini vi accoglie in sala, mentre in cucina la cuoca Maria prepara i sapori autentici delle Marche: qui le <strong>lumache</strong> e la <strong>trippa</strong> si fanno come una volta, ed è per questi due piatti che da generazioni si viene a Castelraimondo da tutta la regione.</p>
 </div>
 </section>
 
-<section>
+<section class="reveal">
 <h2>Le nostre specialità</h2>
 <div class="cards">
 <div class="card card-top"><div class="card-icon">🐌</div><h3>Lumache alla marchigiana</h3><p>Il piatto che ci rende unici nelle Marche: lumache cucinate secondo la ricetta tradizionale di famiglia.</p></div>
@@ -323,23 +504,14 @@ footer{
 </div>
 </section>
 
-<section>
-<h2>Atmosfera</h2>
-<div class="gallery">
-<img src="https://images.unsplash.com/photo-1551218808-94e220e084d2"/>
-<img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5"/>
-<img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba"/>
-</div>
-</section>
-
-<div class="booking" id="prenota">
+<div class="booking reveal" id="prenota">
 <h2>Prenota un tavolo</h2>
 <p>Ti aspettiamo a Castelraimondo</p>
-<a class="btn" href="tel:+390737641844">📞 0737 641844</a>
-<a class="btn" href="https://wa.me/393292416127" target="_blank">💬 WhatsApp</a>
+<a class="btn btn-tel" href="tel:+390737641844">📞 0737 641844</a>
+<a class="btn btn-wa" href="https://wa.me/393292416127" target="_blank">💬 WhatsApp</a>
 </div>
 
-<section style="background:#f0ebe3; text-align:center; padding:50px 10%;">
+<section style="background:#f0ebe3; text-align:center; padding:50px 10%;" class="reveal">
 <h2>Dove siamo</h2>
 <p style="margin:10px 0; font-size:16px;">📍 Via Roma 33, 62022 Castelraimondo (MC)</p>
 <p style="margin:10px 0; font-size:16px;">
@@ -358,7 +530,7 @@ footer{
 </div>
 </section>
 
-<section style="text-align:center; padding:45px 6%;">
+<section style="text-align:center; padding:45px 6%;" class="reveal">
 <h2>I nostri visitatori nel mondo</h2>
 <p style="margin:0 0 22px; font-size:15px; color:#555;">Da dove arrivano gli accessi al sito</p>
 <a href="https://info.flagcounter.com/ukjx" target="_blank" rel="noopener" style="display:inline-block;">
@@ -371,6 +543,25 @@ footer{
 <p style="margin:0;">Tre Stelle © 1927 · Via Roma 33, Castelraimondo · <a href="https://www.instagram.com/ristorante_tre_stelle" target="_blank" style="color:#7A1F26;">Instagram</a></p>
 <p style="margin:6px 0 0; font-size:13px; opacity:0.8;">Antonini S.r.l.s. · Sede legale: Via Roma 33, 62022 Castelraimondo (MC) · P.IVA 02038930430 · REA MC-267128</p>
 </footer>
+
+<script>
+(function(){
+  const sezioni = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    sezioni.forEach(function(s){ s.classList.add('visible'); });
+    return;
+  }
+  const oss = new IntersectionObserver(function(voci){
+    voci.forEach(function(v){
+      if (v.isIntersecting) {
+        v.target.classList.add('visible');
+        oss.unobserve(v.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  sezioni.forEach(function(s){ oss.observe(s); });
+})();
+</script>
 
 </body>
 </html>
