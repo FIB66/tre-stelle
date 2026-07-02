@@ -151,6 +151,20 @@ header h1{
   white-space:nowrap;
 }
 
+.sezione-titolo{
+  text-align:center;
+  font-family:'Playfair Display', serif;
+  font-size:17px;
+  color:#F4A820;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin:20px 0 4px;
+}
+
+.sezione-titolo:first-child{
+  margin-top:6px;
+}
+
 .stato{
   text-align:center;
   padding:40px 20px;
@@ -228,20 +242,65 @@ let currentLang = 'it';
 const cache = {};
 let nomiOriginali = [];
 
-function render(piatti) {
+function render(d) {
   const lista = document.getElementById('lista');
-  if (!piatti || !piatti.length) {
+  const piatti = (d && d[tipo]) || [];
+
+  // Raggruppa per sezione, nell'ordine del foglio. Una sezione nasce da:
+  //  - una riga TUTTA MAIUSCOLA senza prezzo (es. "PRIMI PIATTI"), come già
+  //    scritto da Riccardo nella scheda Carta;
+  //  - oppure dalla colonna "Sezione" della scheda, se presente.
+  const gruppi = [];
+  let corrente = null;
+  const nuovoGruppo = titolo => {
+    corrente = { titolo, piatti: [] };
+    gruppi.push(corrente);
+  };
+  piatti.forEach(p => {
+    const nome = String(p.nome || '').trim();
+    const prezzo = String(p.prezzo || '').trim();
+    const sezione = String(p.sezione || '').trim();
+    const eTitolo = !prezzo && /[A-ZÀ-Ù]/.test(nome) && nome === nome.toUpperCase();
+    if (eTitolo) { nuovoGruppo(nome); return; }
+    if (sezione && (!corrente || corrente.titolo.toLowerCase() !== sezione.toLowerCase())) {
+      nuovoGruppo(sezione);
+    }
+    if (!corrente) nuovoGruppo('');
+    corrente.piatti.push(p);
+  });
+
+  // Solo per la carta: i contorni si scrivono una volta sola, nel menu del giorno
+  if (tipo === 'carta' && d && d.sezioni) {
+    const chiave = Object.keys(d.sezioni).find(k => k.includes('contorn'));
+    if (chiave && d.sezioni[chiave].length) {
+      gruppi.push({
+        titolo: 'Contorni',
+        piatti: d.sezioni[chiave].map(x => ({ nome: x.nome, prezzo: '' }))
+      });
+    }
+  }
+
+  const totale = gruppi.reduce((n, g) => n + g.piatti.length, 0);
+  if (!totale) {
     lista.innerHTML = '<div class="stato">Menu non disponibile. Riprova più tardi.</div>';
     return;
   }
-  lista.innerHTML = piatti.map(p => `
-    <div class="piatto">
-      <span class="nome">${esc(p.nome)}</span>
-      <span class="leader"></span>
-      <span class="prezzo">${esc(prezzoStr(p.prezzo))}</span>
-    </div>`).join('');
 
-  nomiOriginali = Array.from(document.querySelectorAll('.nome')).map(el => ({
+  lista.innerHTML = gruppi.filter(g => g.piatti.length).map(g => {
+    const intestazione = g.titolo
+      ? `<div class="sezione-titolo js-tr">${esc(g.titolo)}</div>`
+      : '';
+    return intestazione + g.piatti.map(p => {
+      const prezzo = prezzoStr(p.prezzo);
+      const destra = prezzo
+        ? `<span class="leader"></span><span class="prezzo">${esc(prezzo)}</span>`
+        : '';
+      return `<div class="piatto"><span class="nome js-tr">${esc(p.nome)}</span>${destra}</div>`;
+    }).join('');
+  }).join('');
+
+  // Traducibili: nomi dei piatti + titoli di sezione
+  nomiOriginali = Array.from(document.querySelectorAll('.js-tr')).map(el => ({
     el,
     testo: el.textContent
   }));
@@ -318,7 +377,7 @@ applicaTitolo('it');
 
 fetch(SCRIPT_URL + '?t=' + Date.now())
   .then(r => r.json())
-  .then(d => render(d[tipo]))
+  .then(d => render(d))
   .catch(() => {
     document.getElementById('lista').innerHTML =
       '<div class="stato">Menu non disponibile. Riprova più tardi.</div>';

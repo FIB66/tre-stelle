@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://fib66.github.io/tre-stelle/</loc>
+    <loc>https://3stelle.eu/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://fib66.github.io/tre-stelle/menu.html</loc>
+    <loc>https://3stelle.eu/menu.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://fib66.github.io/tre-stelle/carta.html</loc>
+    <loc>https://3stelle.eu/carta.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fib66.github.io/tre-stelle/carta.html?tipo=dolci</loc>
+    <loc>https://3stelle.eu/carta.html?tipo=dolci</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
