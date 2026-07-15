@@ -1,8 +1,9 @@
-const CACHE = 'trestelle-v3';
+const CACHE = 'trestelle-v4';
 const ASSETS = [
   '/menu.html',
   '/carta.html',
   '/manifest.json',
+  '/damasco.png',
   'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;700&display=swap'
 ];
 
