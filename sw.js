@@ -1,4 +1,4 @@
-const CACHE = 'trestelle-v4';
+const CACHE = 'trestelle-v5';
 const ASSETS = [
   '/menu.html',
   '/carta.html',
