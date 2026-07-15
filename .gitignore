@@ -1,4 +1,21 @@
-# Documenti interni: il repo e' pubblico (necessario per GitHub Pages),
-# quindi tutto cio' che sta qui dentro finisce online.
-# Il materiale di lavoro vive in "Tre Stelle - Privato" sul Desktop.
+# ATTENZIONE: questo repo e' PUBBLICO (necessario per GitHub Pages).
+# Tutto cio' che viene committato finisce online su https://3stelle.eu/
+# Il materiale di lavoro va in "Tre Stelle - Privato" sul Desktop.
+
+# Segreti (non devono mai finire in un repo)
+.env
+.env.*
+*.key
+
+# Documenti e materiale interno
 MARKETING.md
+tripadvisor.txt
+menu vecchio/
+recensioni tripadivsor giugno2026.jpg
+tagliolini tartufo.jpeg
+
+# Strumenti locali e file temporanei
+.claude/
+Claude - Tre Stelle.bat
+*.bak
+*.tmp
