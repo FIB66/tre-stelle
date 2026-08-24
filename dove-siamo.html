@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dove siamo – Ristorante Tre Stelle | Via Roma 33, Castelraimondo (MC)</title>
+<meta name="description" content="Come raggiungere il Ristorante Tre Stelle: Via Roma 33, 62022 Castelraimondo (MC). Mappa, indicazioni stradali, orari di apertura e contatti per prenotare.">
+<link rel="canonical" href="https://3stelle.eu/dove-siamo.html">
+
+<!-- Open Graph (condivisione WhatsApp / Facebook / Instagram) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dove siamo – Ristorante Tre Stelle">
+<meta property="og:description" content="Via Roma 33, 62022 Castelraimondo (MC). Mappa, indicazioni e orari del Ristorante Tre Stelle, dal 1927.">
+<meta property="og:url" content="https://3stelle.eu/dove-siamo.html">
+<meta property="og:image" content="https://3stelle.eu/icon-512.png">
+<meta property="og:locale" content="it_IT">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2E3092">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<!-- Briciole di pane per Google -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://3stelle.eu/" },
+    { "@type": "ListItem", "position": 2, "name": "Dove siamo", "item": "https://3stelle.eu/dove-siamo.html" }
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* Palette e damascato presi dal menu cartaceo 2026 (vedi index.html) */
+:root{
+  --navy:#2E3092;
+  --lilla:#8182BD;
+  --carta:#FFFFFF;
+  --avorio:#F7F7F7;
+  --grigio:#6D6E71;
+  --grigio-chiaro:#E1E2E1;
+  --ink:#2C2C2C;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  font-family:'Open Sans', sans-serif;
+  background:var(--carta);
+  color:var(--ink);
+}
+
+.damascato{
+  background-image:url('damasco.png');
+  background-repeat:repeat;
+  background-size:313px 306px;
+}
+
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 12px;
+  background:rgba(46,48,146,0.92);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+.btn-home, .btn-menu, .btn-carta{
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:1px;
+  border-radius:30px;
+  padding:10px 20px;
+  text-decoration:none;
+  display:inline-block;
+  border:1.5px solid transparent;
+  transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  background:rgba(255,255,255,0.10);
+  border-color:rgba(255,255,255,0.55);
+  color:var(--carta);
+}
+
+.btn-home:hover, .btn-menu:hover, .btn-carta:hover{
+  transform:translateY(-2px);
+  background:var(--carta);
+  border-color:var(--carta);
+  color:var(--navy);
+}
+
+/* Intestazione: le due fasce diagonali lilla del cartaceo, in versione ridotta */
+.pagina-hero{
+  background-color:var(--carta);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  /* il padding basso tiene il sottotitolo sopra la fascia lilla */
+  padding:130px 20px 115px;
+}
+
+.pagina-hero::before,
+.pagina-hero::after{
+  content:'';
+  position:absolute;
+  left:0;
+  right:0;
+  height:90px;
+  background:var(--lilla);
+  pointer-events:none;
+}
+
+.pagina-hero::before{
+  top:0;
+  clip-path:polygon(0 0, 100% 0, 100% 38%, 0 100%);
+}
+
+.pagina-hero::after{
+  bottom:0;
+  clip-path:polygon(0 100%, 0 38%, 100% 0, 100% 100%);
+}
+
+.pagina-hero-content{
+  position:relative;
+  z-index:1;
+}
+
+.pagina-hero .logotipo{
+  width:220px;
+  max-width:70%;
+  height:auto;
+  display:block;
+  margin:0 auto 14px;
+}
+
+h1{
+  font-family:'Playfair Display', serif;
+  font-size:34px;
+  color:var(--navy);
+  margin:0;
+}
+
+.sottotitolo{
+  text-transform:uppercase;
+  letter-spacing:4px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--grigio);
+  margin:14px 0 0;
+}
+
+main{
+  max-width:900px;
+  margin:0 auto;
+  padding:0 6% 20px;
+}
+
+section{
+  padding:50px 0;
+}
+
+h2{
+  text-align:center;
+  font-family:'Playfair Display', serif;
+  font-size:28px;
+  margin:0 0 14px;
+  color:var(--navy);
+}
+
+h2::after{
+  content:'';
+  display:block;
+  width:70px;
+  height:3px;
+  background:var(--lilla);
+  border-radius:2px;
+  margin:14px auto 0;
+}
+
+section > h2{
+  margin-bottom:30px;
+}
+
+.indirizzo{
+  text-align:center;
+  font-size:19px;
+  line-height:1.7;
+  margin:0 0 24px;
+}
+
+.indirizzo strong{
+  color:var(--navy);
+}
+
+.mappa{
+  width:100%;
+  height:400px;
+  border:0;
+  border-radius:12px;
+  box-shadow:0 10px 26px rgba(46,48,146,0.14);
+  display:block;
+}
+
+.azioni{
+  margin-top:24px;
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-block;
+  padding:13px 30px;
+  background:var(--navy);
+  color:white;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:600;
+  letter-spacing:0.5px;
+  box-shadow:0 4px 14px rgba(46,48,146,0.25);
+  transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(46,48,146,0.32);
+  background:#3C3EA8;
+}
+
+.btn-outline{
+  background:transparent;
+  border:2px solid var(--navy);
+  color:var(--navy);
+  box-shadow:none;
+}
+
+.btn-outline:hover{
+  background:var(--navy);
+  color:white;
+}
+
+.btn-wa{
+  background:#25D366;
+  color:#0b3d22;
+  box-shadow:0 4px 14px rgba(37,211,102,0.3);
+}
+
+.btn-wa:hover{
+  background:#3BDF77;
+}
+
+table.orari{
+  width:100%;
+  max-width:520px;
+  margin:0 auto;
+  border-collapse:collapse;
+  font-size:16px;
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(46,48,146,0.08);
+}
+
+table.orari caption{
+  caption-side:bottom;
+  font-size:13px;
+  font-style:italic;
+  color:var(--grigio);
+  padding-top:12px;
+}
+
+table.orari th,
+table.orari td{
+  padding:14px 18px;
+  text-align:left;
+  border-bottom:1px solid var(--grigio-chiaro);
+}
+
+table.orari th{
+  font-weight:600;
+  color:var(--navy);
+  width:45%;
+}
+
+table.orari td{
+  text-align:right;
+  color:#555;
+}
+
+table.orari tr:last-child th,
+table.orari tr:last-child td{
+  border-bottom:none;
+}
+
+table.orari tr.chiuso th,
+table.orari tr.chiuso td{
+  background:var(--avorio);
+  color:var(--grigio);
+}
+
+.contatti{
+  background:var(--avorio);
+  text-align:center;
+  padding:50px 6%;
+}
+
+.contatti p{
+  font-size:17px;
+  margin:10px 0;
+}
+
+.contatti a{
+  color:var(--navy);
+}
+
+footer{
+  text-align:center;
+  padding:30px 20px 34px;
+  border-top:1px solid var(--grigio-chiaro);
+}
+
+.footer-stelle{
+  width:110px;
+  height:auto;
+  display:block;
+  margin:0 auto 16px;
+  opacity:0.9;
+}
+
+footer a{
+  color:var(--navy);
+}
+
+@media (max-width:700px){
+  h1{ font-size:27px; }
+  h2{ font-size:23px; }
+  .pagina-hero{ padding:120px 16px 100px; }
+  .topbar{ gap:6px; padding:8px 8px; }
+  .btn-home, .btn-menu, .btn-carta{ font-size:13px; padding:9px 14px; letter-spacing:0.5px; }
+  .mappa{ height:300px; }
+  section{ padding:40px 0; }
+  table.orari th, table.orari td{ padding:12px 14px; font-size:15px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <a class="btn-home" href="index.html">← Home</a>
+  <a class="btn-menu" href="menu.html">Menu del Giorno</a>
+  <a class="btn-carta" href="carta.html">Menù alla Carta</a>
+</div>
+
+<header class="pagina-hero damascato">
+  <div class="pagina-hero-content">
+    <img class="logotipo" src="logotipo.svg" alt="Ristorante Tre Stelle">
+    <h1>Dove siamo</h1>
+    <p class="sottotitolo">Castelraimondo · Provincia di Macerata</p>
+  </div>
+</header>
+
+<main>
+
+<section>
+<h2>Il nostro indirizzo</h2>
+<p class="indirizzo">
+  📍 <strong>Via Roma 33</strong><br>
+  62022 Castelraimondo (MC)<br>
+  Marche, Italia
+</p>
+<iframe
+  class="mappa"
+  src="https://maps.google.com/maps?q=Via+Roma+33,+62022+Castelraimondo&output=embed"
+  title="Mappa: Ristorante Tre Stelle, Via Roma 33, Castelraimondo (MC)"
+  allowfullscreen
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+<div class="azioni">
+  <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=Via+Roma+33%2C+62022+Castelraimondo+MC" target="_blank" rel="noopener">🧭 Indicazioni stradali</a>
+  <a class="btn btn-outline" href="https://maps.apple.com/?daddr=Via+Roma+33,+62022+Castelraimondo+MC" target="_blank" rel="noopener">Apri in Apple Mappe</a>
+</div>
+</section>
+
+<section>
+<h2>Orari di apertura</h2>
+<table class="orari">
+  <caption>Consigliamo di prenotare, soprattutto nel fine settimana.</caption>
+  <tbody>
+    <tr><th>Lunedì</th><td>12:00–15:00 · 17:00–22:00</td></tr>
+    <tr><th>Martedì</th><td>12:00–15:00 · 17:00–22:00</td></tr>
+    <tr><th>Mercoledì</th><td>12:00–15:00 · 17:00–22:00</td></tr>
+    <tr><th>Giovedì</th><td>12:00–15:00 · 17:00–22:00</td></tr>
+    <tr><th>Venerdì</th><td>12:00–15:00 · 17:00–22:00</td></tr>
+    <tr><th>Sabato</th><td>12:00–15:00 · 17:00–22:00</td></tr>
+    <tr class="chiuso"><th>Domenica</th><td>Chiuso</td></tr>
+  </tbody>
+</table>
+</section>
+
+</main>
+
+<section class="contatti">
+<h2>Prenota un tavolo</h2>
+<p>Ti aspettiamo a Castelraimondo.</p>
+<p>
+  📞 <a href="tel:+390737641844">0737 641844</a>
+  &nbsp;·&nbsp;
+  📱 <a href="tel:+393292416127">329 241 6127</a>
+</p>
+<div class="azioni">
+  <a class="btn" href="tel:+390737641844">📞 Chiama</a>
+  <a class="btn btn-wa" href="https://wa.me/393292416127" target="_blank" rel="noopener">💬 WhatsApp</a>
+</div>
+</section>
+
+<footer>
+<img class="footer-stelle" src="tre-stelle.svg" alt="" aria-hidden="true">
+<p style="margin:0;">Tre Stelle © 1927 · Via Roma 33, Castelraimondo · <a href="https://www.instagram.com/ristorante_tre_stelle" target="_blank" rel="noopener">Instagram</a></p>
+<p style="margin:6px 0 0; font-size:13px; opacity:0.8;">Antonini S.r.l.s. · Sede legale: Via Roma 33, 62022 Castelraimondo (MC) · P.IVA 02038930430 · REA MC-267128</p>
+</footer>
+
+</body>
+</html>

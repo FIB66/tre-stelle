@@ -7,6 +7,12 @@
 <style>
 *{ box-sizing:border-box; margin:0; padding:0; }
 
+/* Palette del menu cartaceo 2026 (vedi index.html) */
+:root{
+  --navy:#2E3092;
+  --grigio:#6D6E71;
+}
+
 body{
   font-family:'Georgia', serif;
   background:white;
@@ -20,30 +26,42 @@ body{
 .card{
   width:300px;
   text-align:center;
-  border:3px solid #7A1F26;
+  border:3px solid var(--navy);
   border-radius:16px;
   padding:28px 24px;
   background:white;
 }
 
 .stelle{
-  color:#F4A820;
-  font-size:22px;
-  letter-spacing:4px;
-  margin-bottom:4px;
+  margin-bottom:8px;
 }
 
+.stelle img{
+  width:96px;
+  height:auto;
+}
+
+/* Il nome è il logotipo calligrafico del cartaceo: h1 resta per gli screen reader */
 h1{
-  font-family:'Georgia', serif;
-  font-size:28px;
-  color:#7A1F26;
-  letter-spacing:3px;
-  margin-bottom:2px;
+  position:absolute;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap;
+}
+
+.logotipo{
+  width:210px;
+  max-width:100%;
+  height:auto;
+  display:block;
+  margin:0 auto 4px;
 }
 
 .dal{
   font-size:13px;
-  color:#888;
+  color:var(--grigio);
   letter-spacing:2px;
   margin-bottom:20px;
 }
@@ -89,15 +107,16 @@ h1{
 </head>
 <body>
 
-<a href="index.html" class="no-print" style="position:fixed;top:20px;left:20px;display:inline-flex;align-items:center;gap:6px;background:#7A1F26;color:white;text-decoration:none;padding:10px 18px;border-radius:8px;font-size:15px;">← Home</a>
+<a href="index.html" class="no-print" style="position:fixed;top:20px;left:20px;display:inline-flex;align-items:center;gap:6px;background:#2E3092;color:white;text-decoration:none;padding:10px 18px;border-radius:8px;font-size:15px;">← Home</a>
 
 <div class="card">
-  <div class="stelle">★ ★ ★</div>
-  <h1>TRE STELLE</h1>
+  <div class="stelle"><img src="tre-stelle.svg" alt="" aria-hidden="true"></div>
+  <h1>Ristorante Tre Stelle</h1>
+  <img class="logotipo" src="logotipo.svg" alt="Ristorante Tre Stelle">
   <div class="dal">Dal 1927 · Castelraimondo</div>
 
   <div class="qr-box">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://3stelle.eu/menu.html&color=7A1F26&bgcolor=f9f9f9" alt="QR Menu">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://3stelle.eu/menu.html&color=2E3092&bgcolor=f9f9f9" alt="QR Menu">
   </div>
 
   <p class="istruzione">📱 Inquadra il codice<br>per vedere il menu del giorno</p>
@@ -108,7 +127,7 @@ h1{
 </div>
 
 <div class="no-print" style="position:fixed;bottom:20px;right:20px;">
-  <button onclick="window.print()" style="background:#7A1F26;color:white;border:none;padding:12px 24px;border-radius:8px;font-size:15px;cursor:pointer;">🖨️ Stampa</button>
+  <button onclick="window.print()" style="background:#2E3092;color:white;border:none;padding:12px 24px;border-radius:8px;font-size:15px;cursor:pointer;">🖨️ Stampa</button>
 </div>
 
 </body>
