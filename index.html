@@ -272,7 +272,7 @@ h1{
   -webkit-backdrop-filter:blur(8px);
 }
 
-.btn-menu, .btn-carta, .btn-dolci, .btn-qr{
+.btn-menu, .btn-carta, .btn-dolci, .btn-cocktail, .btn-qr{
   font-weight:600;
   font-size:14px;
   letter-spacing:1px;
@@ -284,7 +284,7 @@ h1{
   transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 }
 
-.btn-menu:hover, .btn-carta:hover, .btn-dolci:hover, .btn-qr:hover{
+.btn-menu:hover, .btn-carta:hover, .btn-dolci:hover, .btn-cocktail:hover, .btn-qr:hover{
   transform:translateY(-2px);
 }
 
@@ -301,13 +301,13 @@ h1{
   border-color:var(--grigio-chiaro);
 }
 
-.btn-carta, .btn-dolci, .btn-qr{
+.btn-carta, .btn-dolci, .btn-cocktail, .btn-qr{
   background:rgba(255,255,255,0.10);
   border-color:rgba(255,255,255,0.55);
   color:var(--carta);
 }
 
-.btn-carta:hover, .btn-dolci:hover, .btn-qr:hover{
+.btn-carta:hover, .btn-dolci:hover, .btn-cocktail:hover, .btn-qr:hover{
   background:var(--carta);
   border-color:var(--carta);
   color:var(--navy);
@@ -502,7 +502,7 @@ footer{
   h2{ font-size:26px; }
   .hero-content{ padding-top:150px; }
   .topbar{ gap:6px; padding:8px 8px; }
-  .btn-menu, .btn-carta, .btn-dolci, .btn-qr{ font-size:13px; padding:9px 14px; letter-spacing:0.5px; }
+  .btn-menu, .btn-carta, .btn-dolci, .btn-cocktail, .btn-qr{ font-size:13px; padding:9px 14px; letter-spacing:0.5px; }
   .tagline{ font-size:18px; }
   .story{ flex-direction:column; }
   .story-foto{ width:100%; max-width:340px; margin:0 auto; }
@@ -518,6 +518,7 @@ footer{
   <a class="btn-menu" href="menu.html">Menu del Giorno</a>
   <a class="btn-carta" href="carta.html">Menù alla Carta</a>
   <a class="btn-dolci" href="carta.html?tipo=dolci">Dolci</a>
+  <a class="btn-cocktail" href="carta.html?tipo=cocktail">Cocktail</a>
   <a class="btn-qr" href="qr.html">QR Menu</a>
   <span id="data-oggi" style="color:white;font-size:13px;opacity:0.85;width:100%;text-align:center;"></span>
 </div>
