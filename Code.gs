@@ -5,8 +5,9 @@
 //   clasp redeploy AKfycbxczilq2ynSUZv5cS9BjdpZTIQcDL07ZhOkCgi0QKJuzyOf5cw1EDKRe4WJ67AYynk0Yw -d "FINALE"
 //
 // NB: il foglio "Menu" (menu del giorno) NON ha riga di intestazione: la riga 1 è
-// già un piatto, quindi si leggono TUTTE le righe (niente slice). Le schede "Carta"
-// e "Dolci" invece hanno l'intestazione (Nome | Prezzo) in riga 1 → si salta con slice(1).
+// già un piatto, quindi si leggono TUTTE le righe (niente slice). Le schede "Carta",
+// "Dolci" e "Cocktail" invece hanno l'intestazione (Nome | Prezzo) in riga 1 → si
+// salta con slice(1).
 
 function formatPrezzo_(v) {
   // Sheets a volte interpreta "12,50" come orario 12:50 → la cella diventa una data
@@ -59,9 +60,10 @@ function doGet() {
     sezioni[key].push({ nome: String(nome).trim(), ingredienti, foto });
   });
 
-  // Nuove schede: menu alla carta e dolci (Nome | Prezzo)
+  // Nuove schede: menu alla carta, dolci e cocktail (Nome | Prezzo)
   const carta = leggiListino_(ss.getSheetByName('Carta'));
   const dolci = leggiListino_(ss.getSheetByName('Dolci'));
+  const cocktail = leggiListino_(ss.getSheetByName('Cocktail'));
 
   const output = {
     data: configData[0],
@@ -69,7 +71,8 @@ function doGet() {
     prezzoMezzo: configData[2],
     sezioni,
     carta,
-    dolci
+    dolci,
+    cocktail
   };
 
   return ContentService

@@ -235,8 +235,9 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
 
-// ?tipo=dolci → dolci, altrimenti menu alla carta
-const tipo = new URLSearchParams(location.search).get('tipo') === 'dolci' ? 'dolci' : 'carta';
+// ?tipo=dolci → dolci, ?tipo=cocktail → cocktail, altrimenti menu alla carta
+const tipoRichiesto = new URLSearchParams(location.search).get('tipo');
+const tipo = ['dolci', 'cocktail'].indexOf(tipoRichiesto) >= 0 ? tipoRichiesto : 'carta';
 
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c =>
@@ -252,15 +253,15 @@ function prezzoStr(v) {
 }
 
 const T = {
-  it: { carta:'Menù alla Carta', dolci:'Dolci' },
-  en: { carta:'À la Carte Menu', dolci:'Desserts' },
-  es: { carta:'Menú a la Carta', dolci:'Postres' },
-  ar: { carta:'قائمة الطعام', dolci:'الحلويات' },
-  pt: { carta:'Menu à la carte', dolci:'Sobremesas' },
-  ru: { carta:'Меню а-ля карт', dolci:'Десерты' },
-  fr: { carta:'Menu à la carte', dolci:'Desserts' },
-  sq: { carta:'Menu à la carte', dolci:'Ëmbëlsira' },
-  ro: { carta:'Meniu à la carte', dolci:'Deserturi' }
+  it: { carta:'Menù alla Carta', dolci:'Dolci', cocktail:'Cocktail' },
+  en: { carta:'À la Carte Menu', dolci:'Desserts', cocktail:'Cocktails' },
+  es: { carta:'Menú a la Carta', dolci:'Postres', cocktail:'Cócteles' },
+  ar: { carta:'قائمة الطعام', dolci:'الحلويات', cocktail:'الكوكتيلات' },
+  pt: { carta:'Menu à la carte', dolci:'Sobremesas', cocktail:'Cocktails' },
+  ru: { carta:'Меню а-ля карт', dolci:'Десерты', cocktail:'Коктейли' },
+  fr: { carta:'Menu à la carte', dolci:'Desserts', cocktail:'Cocktails' },
+  sq: { carta:'Menu à la carte', dolci:'Ëmbëlsira', cocktail:'Kokteje' },
+  ro: { carta:'Meniu à la carte', dolci:'Deserturi', cocktail:'Cocktailuri' }
 };
 
 let currentLang = 'it';
@@ -399,6 +400,20 @@ async function setLang(lang) {
 }
 
 applicaTitolo('it');
+
+// Il breadcrumb in head parla del menu alla carta: sulle varianti (?tipo=…) va
+// allineato alla pagina che si sta guardando.
+if (tipo !== 'carta') {
+  const ld = document.querySelector('script[type="application/ld+json"]');
+  try {
+    const dati = JSON.parse(ld.textContent);
+    dati.itemListElement[1].name = T.it[tipo];
+    dati.itemListElement[1].item = 'https://3stelle.eu/carta.html?tipo=' + tipo;
+    ld.textContent = JSON.stringify(dati);
+  } catch {
+    // breadcrumb non aggiornabile: resta quello della carta, nessun danno
+  }
+}
 
 fetch(SCRIPT_URL + '?t=' + Date.now())
   .then(r => r.json())
